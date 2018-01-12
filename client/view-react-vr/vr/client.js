@@ -6,7 +6,7 @@
 import {VRInstance} from 'react-vr-web';
 
 function init(bundle, parent, options) {
-  const vr = new VRInstance(bundle, 'time_bender', parent, {
+  const vr = new VRInstance(bundle, 'view_react_vr', parent, {
     // Add custom options here
     ...options,
   });

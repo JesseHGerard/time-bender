@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-vr';
 
-export default class time_bender extends React.Component {
+export default class view_react_vr extends React.Component {
   render() {
     return (
       <View>
@@ -31,4 +31,4 @@ export default class time_bender extends React.Component {
   }
 };
 
-AppRegistry.registerComponent('time_bender', () => time_bender);
+AppRegistry.registerComponent('view_react_vr', () => view_react_vr);
