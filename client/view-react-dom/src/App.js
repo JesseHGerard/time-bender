@@ -31,9 +31,6 @@ class App extends Component {
     socket.on('updateState', nextState => {
       console.log(nextState);
     });
-
-
-
   }
 
 }

@@ -23,7 +23,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "startmon": "nodemon server.js",
     "client": "npm run start --prefix client/view-react-dom",
-    "dev": "concurrently \"npm run start\" \"npm run client\""
+    "vr": "npm run start --prefix client/view-react-vr",
+    "dev": "concurrently \"npm run startmon\" \"npm run client\" \"npm run vr\""
   }
 }
