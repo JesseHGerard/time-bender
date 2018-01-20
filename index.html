@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <script>
+  import io from 'socket.io-client';
+  const socket = io(widow.location.origin);
+
+  socket.on('gameState', nextState => {
+    console.log(`received nextState: ${JSON.stringify(nextState)}`);
+    this.setState(nextState);
+  });
+  </script>
+  <h1>Hello</h1>
+</body>
+</html>

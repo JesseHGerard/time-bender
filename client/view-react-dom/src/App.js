@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
@@ -16,6 +18,15 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    const socket = io(window.location.origin);
+
+    socket.on('gameState', nextState => {
+      console.log(`received nextState: ${JSON.stringify(nextState)}`);
+    });
+  }
+
 }
 
 export default App;
