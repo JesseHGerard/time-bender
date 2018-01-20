@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LevelView from './components/level-view.js';
 import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
@@ -8,27 +9,31 @@ class App extends Component {
 
   state = {
     room: Date.now(),
-    deviceConnected: false,
+    deviceConnected: true,
 
+    level: 1, // number (number is perfered so that it's incrementable)
+    status: 'stopped', // string, can be 'stopped' or 'started'
+    GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
+
+    currentItem: 1,
+    items: null, // array from items1.json
   };
 
   emitState = () => {
-    socket.emit('updateState', this.state);
-    console.log(`emitted: ${this.state}`);
-  };
+    this.setState({deviceConnected: true}, () => {
+      socket.emit('updateState', this.state);
+      console.log(`emitted: ${this.state}`);
+    });
+  }
 
   render() {
     return (
-      <div className="App">
-        { gameView }
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" onClick={ this.handleClick }/>
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <LevelView
+        items={ this.state.items }
+        deviceConnected={ this.state.deviceConnected }
+        currentItem={  this.state.currentItem }
+        GazeButtClicked={ this.state.GazeButtClicked }
+      />
     );
   }
 
