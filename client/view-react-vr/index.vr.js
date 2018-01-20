@@ -34,7 +34,7 @@ export default class view_react_vr extends React.Component {
 
   componentDidMount() {
     let url;
-    if (process.env.NODE_ENV === production) {
+    if (process.env.NODE_ENV === 'production') {
       url = 'https://time-bender.herokuapp.com/';
     } else {
       url = 'http://localhost:3001/';
