@@ -5,6 +5,10 @@ import io from 'socket.io-client';
 
 class App extends Component {
 
+  state = {
+    room: Date.now()
+  };
+
   render() {
     return (
       <div className="App">
@@ -20,11 +24,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const socket = io(window.location.origin);
+    let socket = io(`${window.location.origin}`);
 
-    socket.on('gameState', nextState => {
-      console.log(`received nextState: ${JSON.stringify(nextState)}`);
+    socket.emit('newRoom', this.state.room);
+    socket.emit('updateState', 'test');
+    socket.on('updateState', nextState => {
+      console.log(nextState);
     });
+
+
+
   }
 
 }
