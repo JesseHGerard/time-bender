@@ -31,12 +31,15 @@ io.on('connection', function(socket){
   // setup new room, or join existing room
   socket.on('newRoom', newRoom => {
     console.log(`newRoom: ${newRoom}`);
-    socket.join(newRoom);
+    // join new room disabled due to vr issues
+    // socket.join(newRoom);
     socket.on('updateState', nextState => {
       console.log(`nextState: ${nextState}`)
       socket.emit('updateState', newRoom);
     });
   });
+
+
 
 });
 

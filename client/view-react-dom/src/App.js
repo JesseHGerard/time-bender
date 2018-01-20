@@ -26,7 +26,7 @@ class App extends Component {
   componentDidMount() {
     let socket = io(`${window.location.origin}`);
 
-    socket.emit('newRoom', this.state.room);
+    // socket.emit('newRoom', this.state.room);
     socket.emit('updateState', 'test');
     socket.on('updateState', nextState => {
       console.log(nextState);
