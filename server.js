@@ -27,16 +27,23 @@ app.use(routes);
 // handle new socket io connection
 io.on('connection', function(socket){
   console.log('connection');
-  // socket.on('newRoom', newRoom => {
-  //   console.log(`newRoom: ${newRoom}`);
-  //   socket.join(newRoom);
-  //   io.emit('joinInvite', newRoom);
-  // });
 
-  socket.on('updateState', nextState => {
-    console.log(`nextState: ${nextState}`);
-    io.emit('updateState', nextState);
+  socket.on('newRoom', newRoom => {
+    console.log(`${newRoom.client} joined newRoom: ${newRoom.room}`);
+
+    socket.join(newRoom.room);
+
+    if (newRoom.client === 'vr') {
+      io.emit('joinInvite', newRoom.room);
+    };
+    
+    socket.on('updateState', nextState => {
+      console.log(`${newRoom.client} sent State: ${nextState}`);
+      io.to(newRoom.room).emit('updateState', nextState);
+    });
   });
+
+
 });
 
 

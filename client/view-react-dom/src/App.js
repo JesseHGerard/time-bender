@@ -9,7 +9,7 @@ class App extends Component {
 
   state = {
     welcome: true,
-    room: Date.now(),
+    room: null,
     deviceConnected: false,
 
     level: 1, // number (number is perfered so that it's incrementable)
@@ -102,13 +102,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // socket.emit('newRoom', this.state.room);
-    socket.emit('updateState', this.state);
-    socket.on('updateState', nextState => {
-      this.setState(nextState);
-      this.forceUpdate();
+    socket.on('joinInvite', nextRoom => {
+      if (this.state.room === null) {
+        this.setState({room: nextRoom}, () => {
+          socket.emit('newRoom',
+            {room: this.state.room, client: "rd"})
+          console.log(`RD joining room: ${this.state.room}`);
+        });
+      }
+      socket.on('updateState', nextState => {
+        this.setState(nextState);
+        console.log(`RD received state: ${JSON.stringify(nextState)}`);
+      });
     });
-    console.log(`state ${JSON.stringify(this.state)}`)
   }
 
 }
