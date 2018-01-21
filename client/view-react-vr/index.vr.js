@@ -19,7 +19,7 @@ export default class view_react_vr extends React.Component {
   state = {
     room: Date.now(),
 
-    level: 1, // number (number is perfered so that it's incrementable)
+    level: 0, // number (number is perfered so that it's incrementable)
     status: 'stopped', // string, can be 'stopped' or 'started'
     GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
 
@@ -29,14 +29,29 @@ export default class view_react_vr extends React.Component {
 
   handleClick = () => {
     let nextState = {
-      level: this.state.level,
-      status: this.state.status,
-      GazeButtClicked: this.state.GazeButtClicked,
+      status: 'started',
+      GazeButtClicked: true,
       currentItem: this.state.currentItem,
       items: this.state.items
     };
-    socket.emit('updateState', nextState);
-    console.log(`vr emitted: ${nextState}`);
+    this.setState({nextState}, () => {
+      socket.emit('updateState', nextState);
+      console.log(`vr emitted: ${JSON.stringify(nextState)}`);
+    })
+
+  };
+
+  handleEndClick = () => {
+    let nextState = {
+      status: 'stopped',
+      GazeButtClicked: true,
+      currentItem: this.state.currentItem,
+      items: this.state.items
+    };
+    this.setState({nextState}, () => {
+      socket.emit('updateState', nextState);
+      console.log(`vr emitted: ${JSON.stringify(nextState)}`);
+    })
   };
 
   render() {
@@ -57,9 +72,25 @@ export default class view_react_vr extends React.Component {
               textAlignVertical: 'center',
               transform: [{translate: [0, 0, -3]}],
             }} >
-            hello
+            start
           </Text>
         </VrButton>
+        <VrButton onClick={ this.handleEndClick } >
+        <Text
+          style={{
+            backgroundColor: '#777879',
+            fontSize: 0.8,
+            fontWeight: '400',
+            layoutOrigin: [0.5, 0.5],
+            paddingLeft: 0.2,
+            paddingRight: 0.2,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            transform: [{translate: [0, 0, -3]}],
+          }} >
+          end
+        </Text>
+      </VrButton>
       </View>
     )
   }
@@ -69,11 +100,10 @@ export default class view_react_vr extends React.Component {
       {room: this.state.room, client: 'vr'},
       function(error, message) {
       console.log(`VR joining newRoom: ${message}`);
-
-      socket.on('updateState', nextState => {
-        this.setState({nextState});
-        console.log(`VR received state: ${nextState}`);
-      });
+    });
+    socket.on('updateState', nextState => {
+      this.setState(nextState);
+      console.log(`VR received state: ${JSON.stringify(nextState)}`);
     });
 
 

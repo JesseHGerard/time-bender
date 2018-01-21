@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LevelView from './components/level-view.js';
 import Welcome from './components/welcome.js';
+import Story from './components/story.js';
 import './App.css';
 import io from 'socket.io-client';
 const socket = io(window.location.origin);
@@ -12,9 +13,9 @@ class App extends Component {
     room: null,
     deviceConnected: false,
 
-    level: 1, // number (number is perfered so that it's incrementable)
+    level: 0,
     status: 'stopped', // string, can be 'stopped' or 'started'
-    GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
+    GazeButtClicked: false, // boolean, this means vr game is in 'resting' state if false
 
     currentItem: 0,
     items: [
@@ -76,7 +77,27 @@ class App extends Component {
     this.setState({welcome: false, deviceConnected: true});
   };
 
+  handleAdvanceLevel = () => {
+    this.setState({
+      level: this.state.level + 1,
+      currentItem: 1,
+      GazeButtClicked: false
+    }, () => {
+      socket.emit('updateState', {
+        level: this.state.level,
+        currentItem: this.state.currentItem,
+        GazeButtClicked: this.state.GazeButtClicked
+      })
+      console.log(`RD emitted state:
+        level: ${this.state.level},
+        currentItem: ${this.state.currentItem},
+        GazeButtClicked: ${this.state.GazeButtClicked}
+      `)
+    });
+  }
+
   render() {
+
     let mainView;
     if (this.state.welcome) {
       mainView =
@@ -94,9 +115,20 @@ class App extends Component {
         />;
     }
 
+    let storyView;
+    if (this.state.status === 'stopped' && !this.state.welcome) {
+      if ( this.state.GazeButtClicked ) {
+        storyView = <Story level={ this.state.level } onClick={ this.handleAdvanceLevel } />;
+      } else if ( !this.state.GazeButtClicked && this.state.level === 0) {
+        console.log('showing intro story')
+        storyView = <Story level={ this.state.level + 1 } onClick={ this.handleAdvanceLevel } />;
+      }
+    }
+
     return (
       <div>
         { mainView }
+        { storyView }
       </div>
     );
   }

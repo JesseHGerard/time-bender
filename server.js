@@ -36,10 +36,10 @@ io.on('connection', function(socket){
     if (newRoom.client === 'vr') {
       io.emit('joinInvite', newRoom.room);
     };
-    
+
     socket.on('updateState', nextState => {
       console.log(`${newRoom.client} sent State: ${nextState}`);
-      io.to(newRoom.room).emit('updateState', nextState);
+      socket.broadcast.to(newRoom.room).emit('updateState', nextState);
     });
   });
 
