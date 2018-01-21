@@ -1,28 +1,68 @@
-.App {
-  text-align: center;
+.level-view {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.game-view-container {
+  width: calc(100vw - 10vmin);
+  height: calc(70vh - 10vmin);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5vmin;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.game-view {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  width: 100vw;
+  height: 70vh;
 }
 
-.App-title {
-  font-size: 1.5em;
+.game-view iframe {
+  width: 100%;
+  height: 100%;
 }
 
-.App-intro {
-  font-size: large;
+.found-item {
+  border: 1px solid magenta;
+  height: 20vmin;
+  width: 20vmin;
+  margin: 5vmin;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.found-item img {
+  height: 20vmin;
+  width: auto;
+  border: none;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  width: 100vw;
+  height: 30vh;
+  box-shadow: 0 -2vmin 3vmin rgba(0, 0, 0, .1);
+}
+
+.current-item-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid cyan;
+  height: 20vmin;
+  width: 80vmin;
+}
+
+.current-item {
+  border: 1px solid purple;
+  height: 20vmin;
+  width: auto;
 }

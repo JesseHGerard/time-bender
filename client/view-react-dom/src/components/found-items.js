@@ -1,25 +1,34 @@
 import React from 'react';
-
+import xImage from './x.svg';
 class FoundItems extends React.Component {
   render() {
+    console.log(`FoundItems Rendered: ${this.props.items}`)
     let foundItems;
-    if (this.props.GazeButtClicked) {
-      foundItems = this.props.GazeButtClicked.map( (item, index) => {
+    let image;
+    if (this.props.items) {
+      foundItems = this.props.items.map( (item, index) => {
         if (index !== 0) {
+
+          if (item.found) {
+            image = item.image;
+          } else {
+            image = xImage;
+          }
+
           return (
-            <div className="item">
-              <img src={ item.image } alt={ item.title } />
+            <div className="found-item" key={ item.title }>
+              <img src={ image } alt={ item.title } />
             </div>
           );
         } else {
-          return;
+          return null;
         }
       });
     }
 
 
     return (
-      <div>
+      <div className="game-view-container">
         { foundItems }
       </div>
     );

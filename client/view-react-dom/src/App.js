@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LevelView from './components/level-view.js';
-import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
 const socket = io(window.location.origin);
@@ -9,15 +8,56 @@ class App extends Component {
 
   state = {
     room: Date.now(),
-    deviceConnected: true,
+    deviceConnected: false,
 
     level: 1, // number (number is perfered so that it's incrementable)
     status: 'stopped', // string, can be 'stopped' or 'started'
     GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
 
-    currentItem: 1,
-    items: null, // array from items1.json
-  };
+    currentItem: 0,
+    items: [
+      {
+        "title": 0,
+        "source": ["Platform.obj", ""],
+        "texture": "Black_nor.jpg",
+        "translate": [5, -25, -20],
+        "scale": 0.10,
+        "rotate": [0, 0, 0],
+        "found": false,
+        "image": "./images/url.jpg",
+      },
+      {
+        "title": 1,
+        "source": ["dna.obj", ""],
+        "texture": "Black_nor.jpg",
+        "translate": [-2.8, 1.2, -5],
+        "scale": 0.025,
+        "rotate": [0, 0, 0],
+        "found": true,
+        "image": "images/golf.svg",
+      },
+      {
+        "title": 2,
+        "source": ["Platform.obj", ""],
+        "texture": "Black_nor.jpg",
+        "translate": [5, -25, -20],
+        "scale": 0.10,
+        "rotate": [0, 0, 0],
+        "found": false,
+        "image": "images/hydrant.svg",
+      },
+      {
+        "title": 3,
+        "source": ["Platform.obj", ""],
+        "texture": "Black_nor.jpg",
+        "translate": [5, -25, -20],
+        "scale": 0.10,
+        "rotate": [0, 0, 0],
+        "found": false,
+        "image": "images/hoody.svg",
+      },
+    ]
+  }
 
   emitState = () => {
     this.setState({deviceConnected: true}, () => {
@@ -41,7 +81,8 @@ class App extends Component {
     // socket.emit('newRoom', this.state.room);
     socket.emit('updateState', this.state);
     socket.on('updateState', nextState => {
-      console.log(nextState);
+      this.setState(nextState);
+      this.forceUpdate();
     });
     console.log(`state ${JSON.stringify(this.state)}`)
   }
