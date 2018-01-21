@@ -1,3 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Monoton');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+.welcome {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  background-color: black;
+
+}
+
+.title {
+  font-family: 'Monoton', sans-serif;
+  font-size: 10vw;
+  font-weight: 400;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25rem;
+  height: 5rem;
+  border: 1px solid rgb(40, 252, 241);
+  margin: 3vmin;
+  border-radius: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.yellow{
+  color: rgb(244, 241, 66);
+  border-color: rgb(244, 241, 66);
+}
+
+.blue{
+  color: rgb(40, 252, 241);
+  border-color: rgb(40, 252, 241);
+}
+
 .level-view {
   position: fixed;
   top: 50%;

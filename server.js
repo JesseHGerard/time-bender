@@ -27,18 +27,16 @@ app.use(routes);
 // handle new socket io connection
 io.on('connection', function(socket){
   console.log('connection');
+  // socket.on('newRoom', newRoom => {
+  //   console.log(`newRoom: ${newRoom}`);
+  //   socket.join(newRoom);
+  //   io.emit('joinInvite', newRoom);
+  // });
 
   socket.on('updateState', nextState => {
     console.log(`nextState: ${nextState}`);
     io.emit('updateState', nextState);
   });
-  // join new room disabled due to vr issues
-  // setup new room, or join existing room
-  /*socket.on('newRoom', newRoom => {
-    console.log(`newRoom: ${newRoom}`);
-    socket.join(newRoom);
-  });*/
-
 });
 
 

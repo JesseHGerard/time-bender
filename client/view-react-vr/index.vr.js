@@ -17,8 +17,7 @@ const socket = io('http://localhost:3001/');
 
 export default class view_react_vr extends React.Component {
   state = {
-    //room: null, // starts null
-    //deviceConnected: false, // bool, starts false
+    room: Date.now();
 
     level: 1, // number (number is perfered so that it's incrementable)
     status: 'stopped', // string, can be 'stopped' or 'started'
@@ -66,7 +65,10 @@ export default class view_react_vr extends React.Component {
   }
 
   componentDidMount() {
-    // socket.emit('newRoom', this.state.room);
+    // socket.emit('newRoom', this.state.room, (error, message) => {
+    //   console.log(`newRoom: ${message}`);
+    // });
+
     socket.on('updateState', nextState => {
       this.setState({nextState});
       console.log(nextState);

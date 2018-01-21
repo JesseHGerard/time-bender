@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LevelView from './components/level-view.js';
+import Welcome from './components/welcome.js';
 import './App.css';
 import io from 'socket.io-client';
 const socket = io(window.location.origin);
@@ -7,6 +8,7 @@ const socket = io(window.location.origin);
 class App extends Component {
 
   state = {
+    welcome: true,
     room: Date.now(),
     deviceConnected: false,
 
@@ -66,14 +68,36 @@ class App extends Component {
     });
   }
 
+  handleOneDevice = () => {
+    this.setState({welcome: false});
+  };
+
+  handleTwoDevice = () => {
+    this.setState({welcome: false, deviceConnected: true});
+  };
+
   render() {
+    let mainView;
+    if (this.state.welcome) {
+      mainView =
+        <Welcome
+          handleOneDevice={ this.handleOneDevice }
+          handleTwoDevice={ this.handleTwoDevice }
+        />;
+    } else {
+      mainView =
+        <LevelView
+          items={ this.state.items }
+          deviceConnected={ this.state.deviceConnected }
+          currentItem={  this.state.currentItem }
+          GazeButtClicked={ this.state.GazeButtClicked }
+        />;
+    }
+
     return (
-      <LevelView
-        items={ this.state.items }
-        deviceConnected={ this.state.deviceConnected }
-        currentItem={  this.state.currentItem }
-        GazeButtClicked={ this.state.GazeButtClicked }
-      />
+      <div>
+        { mainView }
+      </div>
     );
   }
 
