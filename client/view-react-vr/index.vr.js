@@ -6,6 +6,8 @@ import {
   Text,
   View,
   VrButton,
+  Image,
+  VrHeadModel
 } from 'react-vr';
 import items1 from "./items1.json";
 import io from 'socket.io-client';
@@ -21,13 +23,13 @@ export default class view_react_vr extends React.Component {
 
     level: 0, // number (number is perfered so that it's incrementable)
     status: 'stopped', // string, can be 'stopped' or 'started'
-    GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
+    GazeButtClicked: false,
 
     currentItem: 0,
     items: items1 // array from items1.json
   }
 
-  handleClick = () => {
+  handleStartClick = () => {
     let nextState = {
       status: 'started',
       GazeButtClicked: true,
@@ -59,7 +61,7 @@ export default class view_react_vr extends React.Component {
     return (
       <View>
         <Pano source={asset('chess-world.jpg')}/>
-        <VrButton onClick={ this.handleClick } >
+        <VrButton onClick={ this.handleStartClick } >
           <Text
             style={{
               backgroundColor: '#777879',
