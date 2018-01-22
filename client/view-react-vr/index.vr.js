@@ -105,8 +105,6 @@ export default class view_react_vr extends React.Component {
       this.setState(nextState);
       console.log(`VR received state: ${JSON.stringify(nextState)}`);
     });
-
-
   }
 
 };
