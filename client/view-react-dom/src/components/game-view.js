@@ -5,7 +5,7 @@ import '../App.css';
 class GameView extends React.Component {
 
   // CHANGE URL FOR PRODUCTION SERVER!!!!
-  //`${window.location.origin}/vr`
+  //`https://time-bender.herokuapp.com//vr`
 
 
   render(){
@@ -14,7 +14,7 @@ class GameView extends React.Component {
       content = <FoundItems items={ this.props.items } />;
     } else {
       content =
-      <iframe src={ 'https://time-bender.herokuapp.com/vr' } title="vr"></iframe>;
+      <iframe src={ 'http://localhost:3001/vr' } title="vr"></iframe>;
     }
     return (
       <div className="game-view">

@@ -15,7 +15,7 @@ class Welcome extends React.Component {
     if (this.state.playTwo) {
       blue =
         <div className="blue">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://time-bender.herokuapp.com/vr&size=200x200" alt="QR Code" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=http://192.168.1.181:3001/vr&size=200x200" alt="QR Code" />
         </div>;
       yellow =
         <div onClick={ this.props.handleTwoDevice } className="yellow button"><p>start game</p></div>

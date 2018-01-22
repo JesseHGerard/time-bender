@@ -12,7 +12,7 @@ import io from 'socket.io-client';
 
 
 // CHANGE URL FOR PRODUCTION !!!!!!
-const socket = io('https://time-bender.herokuapp.com/');
+const socket = io('http://localhost:3001/');
 
 
 export default class view_react_vr extends React.Component {

@@ -69,12 +69,20 @@ class App extends Component {
     });
   }
 
+  goFullscreen = () => {
+    const element = document.body;
+    const requestMethod = element.requestFullScreen || element.webkitRequestFullScreen ||  element.mozRequestFullScreen || element.msRequestFullScreen;
+    requestMethod.call(element);
+  };
+
   handleOneDevice = () => {
     this.setState({welcome: false});
+    this.goFullscreen();
   };
 
   handleTwoDevice = () => {
     this.setState({welcome: false, deviceConnected: true});
+    this.goFullscreen();
   };
 
   handleAdvanceLevel = () => {
@@ -94,7 +102,7 @@ class App extends Component {
         GazeButtClicked: ${this.state.GazeButtClicked}
       `)
     });
-  }
+  };
 
   render() {
 
@@ -135,6 +143,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     socket.on('joinInvite', nextRoom => {
       if (this.state.room === null) {
         this.setState({room: nextRoom}, () => {

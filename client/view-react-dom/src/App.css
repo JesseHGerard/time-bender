@@ -28,6 +28,7 @@ body {
   font-family: 'Monoton', sans-serif;
   font-size: 10vw;
   font-weight: 400;
+  text-align: center;
 }
 
 .button {
@@ -36,10 +37,10 @@ body {
   align-items: center;
   width: 25rem;
   height: 5rem;
-  border: 1px solid rgb(40, 252, 241);
+  border: 1px solid black;
   margin: 3vmin;
   border-radius: 1.5rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
@@ -93,9 +94,15 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
 }
 
+.story-text {
+  font-size: 1.5rem;
+  line-height: 3rem;
+  width: 60vw;
+  min-width: 280px;
+  margin: -5rem 0 5rem 0;
+}
 
 
 
