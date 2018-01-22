@@ -42,8 +42,6 @@ io.on('connection', function(socket){
       socket.broadcast.to(newRoom.room).emit('updateState', nextState);
     });
   });
-
-
 });
 
 

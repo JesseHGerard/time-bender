@@ -23,7 +23,7 @@ export default class view_react_vr extends React.Component {
     status: 'stopped', // string, can be 'stopped' or 'started'
     GazeButtClicked: false, // boolean, this means vr game is in 'resting' state
 
-    currentItem: 1,
+    currentItem: 0,
     items: items1 // array from items1.json
   }
 
@@ -31,7 +31,7 @@ export default class view_react_vr extends React.Component {
     let nextState = {
       status: 'started',
       GazeButtClicked: true,
-      currentItem: this.state.currentItem,
+      currentItem: 1,
       items: this.state.items
     };
     this.setState({nextState}, () => {

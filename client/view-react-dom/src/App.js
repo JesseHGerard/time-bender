@@ -117,11 +117,12 @@ class App extends Component {
 
     let storyView;
     if (this.state.status === 'stopped' && !this.state.welcome) {
+      let storyViewElement = <Story level={ this.state.level + 1 } onClick={ this.handleAdvanceLevel } />;
       if ( this.state.GazeButtClicked ) {
-        storyView = <Story level={ this.state.level } onClick={ this.handleAdvanceLevel } />;
+        storyView = storyViewElement;
       } else if ( !this.state.GazeButtClicked && this.state.level === 0) {
         console.log('showing intro story')
-        storyView = <Story level={ this.state.level + 1 } onClick={ this.handleAdvanceLevel } />;
+        storyView = storyViewElement;
       }
     }
 
