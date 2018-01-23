@@ -5,7 +5,7 @@ const router = app.Router();
 
 
 router.get('/vr', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/view-react-vr/vr/index.html'))
+  res.sendFile(path.join(__dirname, '../client//Users/jhg-mbp/apps/time-bender/client/VRContent/vr/index.html'))
 });
 
 
