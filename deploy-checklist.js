@@ -16,6 +16,8 @@ index.vr.js - socket.io URL
 
 index.html -  change paths to static/vr-assets
 
+remove hot reload
+
 npm run bundle
 
 copy client.bundle.js and index.bundle.js to static/vr-assets

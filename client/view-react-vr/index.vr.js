@@ -9,6 +9,7 @@ import {
   Image,
   VrHeadModel
 } from 'react-vr';
+import Button from './components/button.js'
 import items1 from "./items1.json";
 import io from 'socket.io-client';
 
@@ -23,76 +24,80 @@ export default class view_react_vr extends React.Component {
 
     level: 0, // number (number is perfered so that it's incrementable)
     status: 'stopped', // string, can be 'stopped' or 'started'
-    GazeButtClicked: false,
+    startButtonStatus: false,
 
     currentItem: 0,
     items: items1 // array from items1.json
   }
 
-  handleStartClick = () => {
+  handleStart = () => {
     let nextState = {
       status: 'started',
-      GazeButtClicked: true,
+      startButtonStatus: true,
       currentItem: 1,
       items: this.state.items
     };
-    this.setState({nextState}, () => {
+    this.setState(nextState, () => {
       socket.emit('updateState', nextState);
       console.log(`vr emitted: ${JSON.stringify(nextState)}`);
-    })
+    });
 
   };
 
-  handleEndClick = () => {
+  handleEnd = () => {
     let nextState = {
       status: 'stopped',
-      GazeButtClicked: true,
+      startButtonStatus: true,
       currentItem: this.state.currentItem,
       items: this.state.items
     };
-    this.setState({nextState}, () => {
+    this.setState(nextState, () => {
       socket.emit('updateState', nextState);
       console.log(`vr emitted: ${JSON.stringify(nextState)}`);
     })
   };
 
+  handleItemBoxClick = () => {
+
+  }
+
   render() {
-    console.log(this.state.items);
+    let startButton;
+    if (!this.state.startButtonStatus) {
+      startButton =
+        <Button
+          onClick={ this.handleStart }
+          title="start"
+        />;
+    }
+    let searchItem =
+      <Image
+        source={ asset(this.state.items[this.state.currentItem].image)}
+        style={{
+          transform: [
+            {rotateY: VrHeadModel.rotation()[1]}
+          ]
+        }}
+      />;
+
+    let findItemBox =
+      <FindItemBox
+        onClick={ handleItemBoxClick }
+        item={ this.items[currentItem] }
+      />
+
+
+
+
+    console.log(`rendered`)
     return (
       <View>
-        <Pano source={asset('chess-world.jpg')}/>
-        <VrButton onClick={ this.handleStartClick } >
-          <Text
-            style={{
-              backgroundColor: '#777879',
-              fontSize: 0.8,
-              fontWeight: '400',
-              layoutOrigin: [0.5, 0.5],
-              paddingLeft: 0.2,
-              paddingRight: 0.2,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              transform: [{translate: [0, 0, -3]}],
-            }} >
-            start
-          </Text>
-        </VrButton>
-        <VrButton onClick={ this.handleEndClick } >
-        <Text
-          style={{
-            backgroundColor: '#777879',
-            fontSize: 0.8,
-            fontWeight: '400',
-            layoutOrigin: [0.5, 0.5],
-            paddingLeft: 0.2,
-            paddingRight: 0.2,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            transform: [{translate: [0, 0, -3]}],
-          }} >
-          end
-        </Text>
-      </VrButton>
+        <Pano source={asset(this.state.items[0].pano)}/>
+        { startButton }
+        <Button
+          onClick={ this.handleEnd }
+          title="end"
+        />
       </View>
     )
   }

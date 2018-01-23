@@ -14,7 +14,7 @@ class GameView extends React.Component {
       content = <FoundItems items={ this.props.items } />;
     } else {
       content =
-      <iframe src={ 'http://localhost:3001/vr' } title="vr"></iframe>;
+      <iframe src={ 'http://localhost:8081/vr' } title="vr"></iframe>;
     }
     return (
       <div className="game-view">
