@@ -31,8 +31,9 @@ class TimeBender extends React.Component {
     currentItem: 0,
     status: '',
     items: items0,
-    perLevel: 0,
+    increment: false,
 
+    perLevel: 0,
     timer: 20,
     fadeAnim: new Animated.Value(1),
     GazeButtClicked: false,
@@ -64,6 +65,13 @@ class TimeBender extends React.Component {
       if(this.frameHandle){
         cancelAnimationFrame(this.frameHandle);
         this.frameHandle = null;
+      }
+    }
+
+    componentWillUpdate() {
+      if (this.state.increment) {
+        this.increment();
+        this.setState({increment: false});
       }
     }
 
@@ -140,7 +148,7 @@ class TimeBender extends React.Component {
   }
 
   startGame() {
-    this.setState({transitionComplete:false})
+    this.setState({ transitionComplete: false })
     this.timer = setInterval(this.startTimer,1000);
     const nextState = {
       status: 'started',
@@ -151,7 +159,6 @@ class TimeBender extends React.Component {
       socket.emit('updateState', nextState);
       console.log(`VR emmited on startGame: ${JSON.strign(nextState)}`);
     });
-
   }
 
 
@@ -296,10 +303,24 @@ class TimeBender extends React.Component {
   }
 
   start = () => {
-    this.setState({level: this.state.level + 1});
+    this.setState({
+      level: this.state.level + 1,
+    }, () => {
+      let nextState = {
+        level: this.state.level,
+        currentItem: this.state.currentItem
+      }
+      socket.emit('updateState', nextState);
+      console.log(`VR emitted on start: ${nextState}`);
+    });
   };
 
   render() {
+    if (this.state.increment) {
+      this.increment();
+      this.setState({increment: false});
+    }
+
     const { GazeButtClicked } = this.state;
 
     return (

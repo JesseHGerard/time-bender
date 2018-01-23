@@ -24,7 +24,7 @@
     "lit": true
   },
   {
-    "title": 3,
+    "title": "rocket",
     "source": ["retro_rocket.obj", "retro_rocket.mtl"],
     "texture": "",
     "translate": [15, 0, -20],
