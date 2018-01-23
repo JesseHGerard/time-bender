@@ -13,7 +13,7 @@
   },
   {
     "title": "Theobromine",
-    "source": ["theobromine.obj", ""],
+    "source": ["Theobromine.obj", ""],
     "texture": "theobromine.jpg",
     "translate": [-13, -2, -15],
     "scale": 0.5,
