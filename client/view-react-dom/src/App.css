@@ -150,7 +150,6 @@ body {
   height: 30vh;
   box-shadow: 0 -2vmin 3vmin rgba(0, 0, 0, .1);
   background: url('./images/stripe-bg-blue.svg');
-  background-color: white;
   background-size: cover;
 }
 
