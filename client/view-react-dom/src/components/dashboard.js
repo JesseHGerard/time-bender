@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
       currentItem =
       <img
         className="current-item"
-        src={ currentItemProp.image }
+        src={ currentItemProp.consoleImage }
         alt={ currentItemProp.name }
       />;
     }
