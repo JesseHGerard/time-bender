@@ -17,49 +17,7 @@ class App extends Component {
     status: 'stopped', // string, can be 'stopped' or 'started'
     startButtonStatus: false, // boolean, this means vr game is in 'resting' state if false
 
-    currentItem: 0,
-    items: [
-      {
-        "title": 0,
-        "source": ["Platform.obj", ""],
-        "texture": "Black_nor.jpg",
-        "translate": [5, -25, -20],
-        "scale": 0.10,
-        "rotate": [0, 0, 0],
-        "found": false,
-        "image": "./images/url.jpg",
-      },
-      {
-        "title": 1,
-        "source": ["dna.obj", ""],
-        "texture": "Black_nor.jpg",
-        "translate": [-2.8, 1.2, -5],
-        "scale": 0.025,
-        "rotate": [0, 0, 0],
-        "found": true,
-        "image": "images/golf.svg",
-      },
-      {
-        "title": 2,
-        "source": ["Platform.obj", ""],
-        "texture": "Black_nor.jpg",
-        "translate": [5, -25, -20],
-        "scale": 0.10,
-        "rotate": [0, 0, 0],
-        "found": false,
-        "image": "images/hydrant.svg",
-      },
-      {
-        "title": 3,
-        "source": ["Platform.obj", ""],
-        "texture": "Black_nor.jpg",
-        "translate": [5, -25, -20],
-        "scale": 0.10,
-        "rotate": [0, 0, 0],
-        "found": false,
-        "image": "images/hoody.svg",
-      },
-    ]
+    currentItem: 0
   }
 
   emitState = () => {
@@ -104,6 +62,11 @@ class App extends Component {
     });
   };
 
+  emitIncrement = () => {
+    socket.emit('updateState', { increment: true });
+    console.log('RD emitted increment');
+  }
+
   render() {
 
     let mainView;
@@ -126,7 +89,7 @@ class App extends Component {
 
     let storyView;
     if (this.state.status === 'stopped' && !this.state.welcome) {
-      let storyViewElement = <Story level={ this.state.level + 1 } onClick={ this.handleAdvanceLevel } />;
+      let storyViewElement = <Story level={ this.state.level + 1 } onClick={ this.emitIncrement } />;
       if ( this.state.startButtonStatus ) {
         storyView = storyViewElement;
       } else if ( !this.state.startButtonStatus && this.state.level === 0) {
