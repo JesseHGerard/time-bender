@@ -15,7 +15,7 @@ class App extends Component {
 
     level: 0,
     status: 'stopped', // string, can be 'stopped' or 'started'
-    GazeButtClicked: false, // boolean, this means vr game is in 'resting' state if false
+    startButtonStatus: false, // boolean, this means vr game is in 'resting' state if false
 
     currentItem: 0,
     items: [
@@ -89,17 +89,17 @@ class App extends Component {
     this.setState({
       level: this.state.level + 1,
       currentItem: 1,
-      GazeButtClicked: false
+      startButtonStatus: false
     }, () => {
       socket.emit('updateState', {
         level: this.state.level,
         currentItem: this.state.currentItem,
-        GazeButtClicked: this.state.GazeButtClicked
+        startButtonStatus: this.state.startButtonStatus
       })
       console.log(`RD emitted state:
         level: ${this.state.level},
         currentItem: ${this.state.currentItem},
-        GazeButtClicked: ${this.state.GazeButtClicked}
+        startButtonStatus: ${this.state.startButtonStatus}
       `)
     });
   };
@@ -119,16 +119,17 @@ class App extends Component {
           items={ this.state.items }
           deviceConnected={ this.state.deviceConnected }
           currentItem={  this.state.currentItem }
-          GazeButtClicked={ this.state.GazeButtClicked }
+          startButtonStatus={ this.state.startButtonStatus }
+          status={this.state.status}
         />;
     }
 
     let storyView;
     if (this.state.status === 'stopped' && !this.state.welcome) {
       let storyViewElement = <Story level={ this.state.level + 1 } onClick={ this.handleAdvanceLevel } />;
-      if ( this.state.GazeButtClicked ) {
+      if ( this.state.startButtonStatus ) {
         storyView = storyViewElement;
-      } else if ( !this.state.GazeButtClicked && this.state.level === 0) {
+      } else if ( !this.state.startButtonStatus && this.state.level === 0) {
         console.log('showing intro story')
         storyView = storyViewElement;
       }

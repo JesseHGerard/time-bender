@@ -9,9 +9,10 @@ class LevelView extends React.Component {
       <div className="level-view">
         <GameView items={ this.props.items } deviceConnected={ this.props.deviceConnected } />
         <Dashboard
-          GazeButtClicked ={ this.props.GazeButtClicked }
+          startButtonStatus ={ this.props.startButtonStatus }
           currentItem={ this.props.currentItem }
           items={ this.props.items }
+          status={ this.props.status}
         />
       </div>
     );

@@ -18,31 +18,7 @@ import io from 'socket.io-client';
 // CHANGE URL FOR PRODUCTION !!!!!!
 const socket = io('http://localhost:3001/');
 
-    // let levelStart;
-    // if(this.state.win){
-    //   levelStart =
-    //       <View style={styles.gazeView}>
-    //         <GazeButton onClick={()=> this.increment()} duration={500}
-    //           >
-    //           {time => (
-    //             <Text style={styles.gazeText}>
-    //               {GazeButtClicked ? 'BLAST OFF!' : `YOU WON. NICE.${time}`}
-    //             </Text>
-    //           )}
-    //         </GazeButton>
-    //       </View>
-    // }else if ((!this.state.win && this.state.level === 0) || (!this.state.win && this.state.level === 1)){
-    //   <View>
-    //     <StartButton start={this.start.bind(this)} {...this.state} />
-    //   </View>
-    // }else if((!this.state.win && !this.state.level === 0) || (!this.state.win && !this.state.level === 1)){
-    //   console.log("Run workmhole here");
-    //   <View>
-    //     <Score score={this.state.score} />
-    //     <Timer timer={this.state.timer} score={this.state.score}{...this.state} />
-    //     <Button startGame={this.startGame.bind(this)} {...this.state} />
-    //   </View>
-    // }
+
 const vrTextboxContent =
   'The game Time Console is not available!';
 const itemsArray = [ items0, items0, items0, items1, items2, items3];
@@ -56,9 +32,6 @@ class TimeBender extends React.Component {
     status: '',
     items: items0,
     perLevel: 0,
-    itemOneFound: false,
-    itemTwoFound: false,
-    itemThreeFound: false,
 
     timer: 20,
     fadeAnim: new Animated.Value(1),
@@ -85,7 +58,6 @@ class TimeBender extends React.Component {
     onGazeTwo = this.onGazeTwo.bind(this);
     animateProgressTwo = this.animateProgressTwo.bind(this);
     rotate = this.rotate.bind(this);
-    start = this.start.bind(this);
     increment = this.increment.bind(this);
 
     componentWillUnmount(){
@@ -107,15 +79,16 @@ class TimeBender extends React.Component {
 
     foundItem = (itemIndex) => {
       this.setState({
-        [itemIndex]: true
+        currentItem: this.state.currentItem + 1
       }, () => {
         const nextState = {
-          itemOneFound: this.state.itemOneFound,
-          itemTwoFound: this.state.itemTwoFound,
-          itemThreeFound: this.state.itemThreeFound,
+          visibleZero: this.state.visibleZero,
+          visibleOne: this.state.visibleOne,
+          visibleTwo: this.state.visibleTwo,
+          currentItem: this.state.currentItem
         };
         socket.emit('updateState', nextState);
-        console.log(`VR emitted : ${nextState}`);
+        console.log(`VR emitted on foundItem: ${JSON.stringify(nextState)}`);
       });
     };
 
@@ -145,18 +118,19 @@ class TimeBender extends React.Component {
       Animated.timing(
         this.state.fadeAnim,
         {toValue: 0}
-      ).start();
+      );
       Animated.timing(
         this.state.fadeAnim,
         {toValue: 1}
-      ).start();
+      );
      return this.setState({status: 'stopped', timer: levels[this.state.level].timer}, () => {
        const nextState = {
          status: 'stopped'
        }
        this.setState(nextState, () => {
+         nextState.startButtonStatus = this.state.startButtonStatus;
          socket.emit('updateState', nextState);
-         console.log(`vr emitted: ${JSON.stringify(nextState)}`);
+         console.log(`vr emitted on startTimer: ${JSON.stringify(nextState)}`);
        });
      });
     } else{
@@ -175,14 +149,11 @@ class TimeBender extends React.Component {
     this.setState(nextState, () => {
       nextState.items = this.state.items;
       socket.emit('updateState', nextState);
+      console.log(`VR emmited on startGame: ${JSON.strign(nextState)}`);
     });
 
   }
 
-  start() {
-   level = (this.state.level += 1)
-   this.setState({level: level})
-  }
 
   animateProgress() {
     this.timeout = setTimeout(this.onGaze, 1000);
@@ -197,57 +168,66 @@ class TimeBender extends React.Component {
 
   // call when level is won, next state will emit, story will mount
   levelWinEmit = () => {
+    let nextState = {
+      status: this.state.status,
+      startButtonStatus: this.state.startButtonStatus
+    };
     socket.emit('updateState', { status: this.state.status });
-    console.log(`VR emitted : ${this.state.status}`);
+    console.log(`VR emitted on levelWin: ${JSON.stringify(nextState)}`);
   };
 
   onGazeZero() {
-    //set state which sets opacity? set opacity?
-    this.state.score +=1;
-    this.state.perLevel +=1;
-    this.setState({visibleZero: 'inactive'})
-    //  this.toggleDisplay()
+    this.setState({
+      score: this.state.score + 1,
+      perLevel: this.state.perLevel + 1,
+      visibleZero: 'inactive'
+    });
     if(this.state.score == 3 && this.state.status == 'started'){
       this.setState({
         win: true,
         timer: 0,
         status: 'stopped'})
+      this.levelWinEmit();
     }
     this.foundItem('itemOneFound');
-    this.levelWinEmit();
   }
 
   onGazeOne() {
-    //set state which sets opacity? set opacity?
-    this.state.score +=1;
-    this.state.perLevel +=1;
-    this.setState({visibleOne: 'inactive'})
-  //  this.toggleDisplay()
-  if(this.state.perLevel == 3 && this.state.status == 'started'){
-    this.setState({win: true, timer: 0, status: 'stopped'})
+
+    this.setState({
+      score: this.state.score + 1,
+      perLevel: this.state.perLevel + 1,
+      visibleOne: 'inactive'
+    });
+
+    if(this.state.perLevel == 3 && this.state.status == 'started'){
+      this.setState({win: true, timer: 0, status: 'stopped'});
+      this.foundItem('itemOneFound');
     }
     this.foundItem(1);
-    this.levelWinEmit();
+
   }
 
   onGazeTwo() {
-    //set state which sets opacity? set opacity?
-    this.state.score +=1;
-    this.state.perLevel +=1;
-    this.setState({visibleTwo: 'inactive'})
-    //  this.toggleDisplay()
+    this.setState({
+      score: this.state.score + 1,
+      perLevel: this.state.perLevel + 1,
+      visibleTwo: 'inactive'
+    });
     if(this.state.score == 3 && this.state.status == 'started'){
-      this.setState({win: true, timer: 0, status: 'stopped'})
+      this.setState({win: true, timer: 0, status: 'stopped'});
+      this.levelWinEmit();
     }
     this.foundItem(2);
-    this.levelWinEmit();
   }
 
   increment() {
     console.log("It incremented!");
-    this.state.level +=1;
     this.setState({
+      level: this.state.level +1,
       status: 'stopped',
+      currentItem: 0,
+      startButtonStatus: false,
       timer: levels[this.state.level].timer,
       items: itemsArray[this.state.level],
       visibleZero: 'active',
@@ -259,8 +239,14 @@ class TimeBender extends React.Component {
       const nextState = {
         status: this.state.status,
         items: this.state.items,
+        level: this.state.level,
+        startButtonStatus: this.state.startButtonStatus,
+        visibleZero: this.state.visibleZero,
+        visibleOne: this.state.visibleOne,
+        visibleTwo: this.state.visibleTwo,
       };
       socket.emit('updateState', nextState);
+      console.log(`VR emmited on increment: ${JSON.strign(nextState)}`);
     });
   }
 
@@ -308,6 +294,10 @@ class TimeBender extends React.Component {
       console.log(`VR received state: ${JSON.stringify(nextState)}`);
     });
   }
+
+  start = () => {
+    this.setState({level: this.state.level + 1});
+  };
 
   render() {
     const { GazeButtClicked } = this.state;
@@ -413,7 +403,7 @@ class TimeBender extends React.Component {
               {(this.state.level === 0) || (this.state.level === 1) ?
                 starter =
                 <View>
-                <StartButton start={this.start.bind(this)} {...this.state} />
+                <StartButton start={this.start} {...this.state} />
                 </View>
                 :
                 starter = <View>
@@ -514,5 +504,31 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   }
 })
+
+// let levelStart;
+// if(this.state.win){
+//   levelStart =
+//       <View style={styles.gazeView}>
+//         <GazeButton onClick={()=> this.increment()} duration={500}
+//           >
+//           {time => (
+//             <Text style={styles.gazeText}>
+//               {GazeButtClicked ? 'BLAST OFF!' : `YOU WON. NICE.${time}`}
+//             </Text>
+//           )}
+//         </GazeButton>
+//       </View>
+// }else if ((!this.state.win && this.state.level === 0) || (!this.state.win && this.state.level === 1)){
+//   <View>
+//     <StartButton start={this.start.bind(this)} {...this.state} />
+//   </View>
+// }else if((!this.state.win && !this.state.level === 0) || (!this.state.win && !this.state.level === 1)){
+//   console.log("Run workmhole here");
+//   <View>
+//     <Score score={this.state.score} />
+//     <Timer timer={this.state.timer} score={this.state.score}{...this.state} />
+//     <Button startGame={this.startGame.bind(this)} {...this.state} />
+//   </View>
+// }
 
 AppRegistry.registerComponent('TimeBender', () => TimeBender);
