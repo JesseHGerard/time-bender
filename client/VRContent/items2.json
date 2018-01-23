@@ -25,7 +25,7 @@
   },
   {
     "title": 3,
-    "source": ["Platform.obj", ""],
+    "source": ["BioHazard.obj", ""],
     "texture": "Black_nor.jpg",
     "translate": [5, -25, -20],
     "scale": 0.10,

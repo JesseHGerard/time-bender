@@ -30,7 +30,7 @@ Button: {
     borderWidth: 0.025,
     borderColor: 'red',
     transform: [
-      {translate: [0.15, -2.05, -5]},
+      {translate: [0.40, -2.05, -5]},
     {rotateX: -45},
     ]
   },

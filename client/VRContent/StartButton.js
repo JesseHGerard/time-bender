@@ -14,12 +14,14 @@ export default class StartButton extends React.Component {
         height: 0.4,
         backgroundColor: 'red',
         transform: [
-          {translate: [-2, 0, -5]}
+          {translate: [0.15, -1.8, -5]},
+          {rotateX: -45},
         ]
         },
       text: {
-            fontSize: 0.3,
+            fontSize: 0.2,
             textAlign: 'center',
+            margin: 0.05,
       },
     });
   }

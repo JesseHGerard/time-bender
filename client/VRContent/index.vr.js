@@ -55,7 +55,7 @@ class TimeBender extends React.Component {
     currentItem: 0,
     status: '',
     items: items0,
-
+    perLevel: 0,
     itemOneFound: false,
     itemTwoFound: false,
     itemThreeFound: false,
@@ -86,11 +86,18 @@ class TimeBender extends React.Component {
     animateProgressTwo = this.animateProgressTwo.bind(this);
     rotate = this.rotate.bind(this);
     start = this.start.bind(this);
+    increment = this.increment.bind(this);
+
+    componentWillUnmount(){
+      if(this.frameHandle){
+        cancelAnimationFrame(this.frameHandle);
+        this.frameHandle = null;
+      }
+    }
 
     rotate() {
       const now = Date.now();
       const delta = now - this.lastUpdate;
-      rotate = this.rotate.bind(this);
       this.lastUpdate = now;
       this.setState({
           rotation: this.state.rotation + delta / 8
@@ -215,19 +222,12 @@ class TimeBender extends React.Component {
     this.state.score +=1;
     this.state.perLevel +=1;
     this.setState({visibleOne: 'inactive'})
-<<<<<<< HEAD
   //  this.toggleDisplay()
   if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
     }
     this.foundItem(1);
-=======
-    //  this.toggleDisplay()
-    if(this.state.score == 3 && this.state.status == 'started'){
-      this.setState({win: true, timer: 0, status: 'stopped'})
-      }
-      this.levelWinEmit();
->>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
+    this.levelWinEmit();
   }
 
   onGazeTwo() {
@@ -253,7 +253,7 @@ class TimeBender extends React.Component {
       visibleZero: 'active',
       visibleOne: 'active',
       visibleTwo: 'active',
-      score: 0,
+      perlevel: 0,
       win: false,
     }, () => {
       const nextState = {
@@ -296,6 +296,7 @@ class TimeBender extends React.Component {
   }
 
   componentDidMount() {
+    this.rotate();
     // connect to new room with socket.io
     socket.emit('newRoom',
       {room: this.state.room, client: 'vr'},
@@ -308,20 +309,9 @@ class TimeBender extends React.Component {
     });
   }
 
-  //   onGaze(){
-  //   //set state which sets opacity? set opacity?
-  //   console.log("helloo")
-  //   this.state.score +=1;
-  //   this.setState({visible: 'inactive'})
-  // //  this.toggleDisplay()
-  // if(this.state.score == 4 && this.state.status == 'started'){
-  //   this.setState({win: true, timer: 0, status: 'stopped'})
-  //   }
-  // }
-  // end item disappear button
-
   render() {
     const { GazeButtClicked } = this.state;
+
     return (
       <View style={ styles.rootView }>
         <View style={ styles.triggerContainer }>
@@ -333,7 +323,6 @@ class TimeBender extends React.Component {
 
           <AmbientLight intensity={ 1.6 } />
 
-          <Animated.View>
           <Model
             source={{
               obj: asset('scientist_projection.obj'),
@@ -341,15 +330,15 @@ class TimeBender extends React.Component {
               }}
             style={{
             transform: [
-              {translate: [15, 1, -20]},
-              {scale: 0.20 },
-              {rotateY: 3},
-              {rotateX: this.state.rotation},
-              {rotateZ: 3}
+              {translate: [1, -1, -2]},
+              {scale: 0.018 },
+              {rotateY: this.state.rotation},
+              {rotateX: -90},
+              {rotateZ: 0}
             ],
           }}
           />
-          </Animated.View>
+
           <TimeConsole/>
           <Pano source={ asset(levels[this.state.level].image) }/>
 
@@ -412,7 +401,7 @@ class TimeBender extends React.Component {
 
           <View>
             { this.state.win ?
-            <VrButton style={styles.gazeView}
+            <VrButton style={styles.victoryButt}
               onClick={this.increment}>
               <Text style={styles.gazeText}>VICTORY! NEXT LEVEL?</Text>
             </VrButton>
@@ -474,7 +463,7 @@ const styles = StyleSheet.create({
     transform: [{translate: [2, 2, -4]}],
   },
 
-  gazeView:{
+  victoryButt:{
     fontSize: 0.3,
     backgroundColor: '#fff',
     width: 0.7,
@@ -484,7 +473,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.01,
     color: 'black',
     borderRadius: 0.25,
-    transform: [{translate: [0, 1, -4]}],
+    transform: [{translate: [0, -0.3, -4]}],
   },
 
   gazeText:{

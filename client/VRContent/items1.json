@@ -1,35 +1,38 @@
 [
   {
     "title": 1,
-    "source": ["Bender.obj", ""],
-    "texture": "steel.jpg",
+    "source": ["bomb.obj", "bomb.mtl"],
+    "texture": "",
     "translate": [3, -5.6, -7],
     "scale": 0.2,
     "rotate": [0, -70, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/bomb.png",
+    "consoleImage": "./static_assets/images/bomb.png",
     "lit": true
   },
   {
     "title": 2,
-    "source": ["alien.obj", "alien.mtl"],
+    "source": ["dna.obj", ""],
     "texture": "",
     "translate": [-3, -5.2, -6],
     "scale": 0.3,
     "rotate": [0, 75, 0],
     "found": false,
     "image": "./../static_assets/images/DNA_image.png",
+    "consoleImage": "./static_assets/images/DNA_image.png",
     "lit": true
   },
   {
     "title": 3,
-    "source": ["Platform.obj", ""],
-    "texture": "Black_nor.jpg",
+    "source": ["hour glass.obj", "hour glass.mtl"],
+    "texture": "",
     "translate": [5, -25, -20],
     "scale": 0.10,
     "rotate": [0, 0, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/hour glass.png",
+    "consoleImage": "./static_assets/images/hour glass.png",
     "lit": true
   }
 ]

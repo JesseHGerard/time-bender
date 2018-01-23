@@ -17,7 +17,7 @@ export default class Button extends React.Component {
         borderRadius: 0.05,
         backgroundColor: 'green',
         transform: [
-          {translate: [0.03, -2.20, -5]},
+          {translate: [0.34, -2.20, -5]},
           {rotateX: -45},
         ]
         },

@@ -28,7 +28,7 @@ const styles= StyleSheet.create({
     borderWidth: 0.025,
     borderColor: 'red',
     transform: [
-      {translate: [0.18, -1.35, -5]},
+      {translate: [0.40, -1.35, -5]},
       {rotateX: -45},
     ]
   },
@@ -43,7 +43,7 @@ Button: {
     borderWidth: 0.025,
     borderColor: 'red',
     transform: [
-      {translate: [0.18, -1.35, -5]},
+      {translate: [0.40, -1.35, -5]},
     {rotateX: -45},
     ]
   },

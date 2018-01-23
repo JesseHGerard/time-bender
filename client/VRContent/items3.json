@@ -8,6 +8,7 @@
     "rotate": [0, 0, 0],
     "found": false,
     "image": "./../static_assets/images/DNA_image.png",
+    "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
   {
@@ -19,6 +20,7 @@
     "rotate": [0, 0, 0],
     "found": false,
     "image": "./../static_assets/images/DNA_image.png",
+    "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
   {
@@ -30,6 +32,7 @@
     "rotate": [0, 0, 0],
     "found": false,
     "image": "./../static_assets/images/DNA_image.png",
+    "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
 ]
