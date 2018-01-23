@@ -43,12 +43,12 @@ const socket = io('http://localhost:3001/');
     //     <Button startGame={this.startGame.bind(this)} {...this.state} />
     //   </View>
     // }
-
 const vrTextboxContent =
   'The game Time Console is not available!';
 const itemsArray = [ items0, items0, items0, items1, items2, items3];
 class TimeBender extends React.Component {
   state = {
+<<<<<<< HEAD
         level: 0,
         startButtonStatus: false,
         deviceConnected: false,
@@ -71,6 +71,29 @@ class TimeBender extends React.Component {
         rotation: 130,
         perLevel: 0
       };
+=======
+    level: 0,
+    startButtonStatus: false,
+    deviceConnected: false,
+    room: Date.now(),
+    currentItem: 0,
+    status: '',
+    items: items0,
+
+    timer: 20,
+    fadeAnim: new Animated.Value(1),
+    GazeButtClicked: false,
+    renderVrTextbox: false,
+    visibleZero: 'active',
+    visibleOne: 'active',
+    visibleTwo: 'active',
+    score: 0,
+    win: false,
+    transitionComplete: true,
+    introduced: false,
+    rotation: 130
+  };
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
     startTimer = this.startTimer.bind(this);
     _toggleDisplay = this.toggleDisplay.bind(this);
     lastUpdate = Date.now();
@@ -82,12 +105,10 @@ class TimeBender extends React.Component {
     animateProgressOne = this.animateProgressOne.bind(this);
     onGazeTwo = this.onGazeTwo.bind(this);
     animateProgressTwo = this.animateProgressTwo.bind(this);
-
     rotate = this.rotate.bind(this);
     start = this.start.bind(this);
 
-   rotate() {
-      const rando = Math.floor(Math.random() * 7);
+    rotate() {
       const now = Date.now();
       const delta = now - this.lastUpdate;
       rotate = this.rotate.bind(this);
@@ -103,12 +124,16 @@ class TimeBender extends React.Component {
       const nextItems = this.state.items;
       console.log("json copy: "+ nextItems);
       nextItems[itemIndex].found = true;
-      this.setState({items: nextItems}, () => {
+      this.setState({
+        items: nextItems,
+        currentItem: this.state.currentItem + 1
+      }, () => {
         const nextState = {
-          items: this.state.items
+          items: this.state.items,
+          currentItem: this.state.currentItem
         };
         socket.emit('updateState', nextState);
-        console.log("Found: "+this.state.items[itemIndex].found);
+        console.log(`VR emitted : ${nextState}`);
       });
     };
 
@@ -121,8 +146,9 @@ class TimeBender extends React.Component {
           clearInterval(this.timer);
           break;
       }
-  }
-   toggleDisplay() {
+    }
+
+  toggleDisplay() {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrTextbox: !this.state.renderVrTextbox});
     } else {
@@ -130,88 +156,160 @@ class TimeBender extends React.Component {
       NativeModules.DomOverlayModule.openOverlay(this.state.items);
     }
   }
-  startTimer(){
-  let x = this.state.timer
-  if(x === 0){
-    Animated.timing(
-      this.state.fadeAnim,
-      {toValue: 0}
-    ).start();
-    Animated.timing(
-      this.state.fadeAnim,
-      {toValue: 1}
-    ).start();
-   return this.setState({status: 'stopped', timer: levels[this.state.level].timer});
-  } else{
-    x -= 1
-    this.setState({timer: x})
+
+  startTimer() {
+    let x = this.state.timer
+    if(x === 0){
+      Animated.timing(
+        this.state.fadeAnim,
+        {toValue: 0}
+      ).start();
+      Animated.timing(
+        this.state.fadeAnim,
+        {toValue: 1}
+      ).start();
+     return this.setState({status: 'stopped', timer: levels[this.state.level].timer}, () => {
+       const nextState = {
+         status: 'stopped'
+       }
+       this.setState(nextState, () => {
+         socket.emit('updateState', nextState);
+         console.log(`vr emitted: ${JSON.stringify(nextState)}`);
+       });
+     });
+    } else{
+      x -= 1
+      this.setState({timer: x})
     }
   }
-  startGame(){
+
+  startGame() {
     this.setState({transitionComplete:false})
     this.timer = setInterval(this.startTimer,1000);
-    this.setState({status: 'started'})
-    this.setState({introduced:true});
+    const nextState = {
+      status: 'started',
+      startButtonStatus: true,
+    };
+    this.setState(nextState, () => {
+      nextState.items = this.state.items;
+      socket.emit('updateState', nextState);
+    });
+
   }
-  start(){
+
+  start() {
    level = (this.state.level += 1)
    this.setState({level: level})
   }
+
   animateProgress() {
     console.log("Progress helloo");
     this.timeout = setTimeout(this.onGaze, 1000);
     // begin animation
   }
+
   stopProgress() {
     clearTimeout(this.timeout);
     this.timeout = null;
     // end animation
   }
 
-  onGazeZero(){
-  //set state which sets opacity? set opacity?
+  // call when level is won, next state will emit, story will mount
+  levelWinEmit = () => {
+    socket.emit('updateState', { status: this.state.status });
+    console.log(`VR emitted : ${this.state.status}`);
+  };
+
+  onGazeZero() {
+    //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
     this.state.perLevel +=1;
     this.setState({visibleZero: 'inactive'})
+<<<<<<< HEAD
   //  this.toggleDisplay()
   if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
+=======
+    //  this.toggleDisplay()
+    if(this.state.score == 3 && this.state.status == 'started'){
+      this.setState({
+        win: true,
+        timer: 0,
+        status: 'stopped'})
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
     }
-  this.foundItem(0);
+    this.foundItem(0);
+    this.levelWinEmit();
   }
 
-   onGazeOne(){
-  //set state which sets opacity? set opacity?
+  onGazeOne() {
+    //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
     this.state.perLevel +=1;
     this.setState({visibleOne: 'inactive'})
+<<<<<<< HEAD
   //  this.toggleDisplay()
   if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
     }
     this.foundItem(1);
+=======
+    //  this.toggleDisplay()
+    if(this.state.score == 3 && this.state.status == 'started'){
+      this.setState({win: true, timer: 0, status: 'stopped'})
+      }
+      this.foundItem(1);
+      this.levelWinEmit();
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
   }
 
-   onGazeTwo(){
-  //set state which sets opacity? set opacity?
+  onGazeTwo() {
+    //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
     this.state.perLevel +=1;
     this.setState({visibleTwo: 'inactive'})
+<<<<<<< HEAD
   //  this.toggleDisplay()
   if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
+=======
+    //  this.toggleDisplay()
+    if(this.state.score == 3 && this.state.status == 'started'){
+      this.setState({win: true, timer: 0, status: 'stopped'})
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
     }
     this.foundItem(2);
+    this.levelWinEmit();
   }
 
-  increment(){
+  increment() {
     console.log("It incremented!");
     this.state.level +=1;
+<<<<<<< HEAD
    return this.setState({status: 'stopped', timer: levels[this.state.level].timer, items: itemsArray[this.state.level], visibleZero: 'active', visibleOne: 'active', visibleTwo: 'active', perLevel: 0, win: false});
+=======
+    this.setState({
+      status: 'stopped',
+      timer: levels[this.state.level].timer,
+      items: itemsArray[this.state.level],
+      visibleZero: 'active',
+      visibleOne: 'active',
+      visibleTwo: 'active',
+      score: 0,
+      win: false,
+    }, () => {
+      let nextState = {
+        status: this.state.status,
+        items: this.state.items,
+      };
+      socket.emit('updateState', nextState);
+    });
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
   }
+
   //begin object gaze button functions
   animateProgressZero() {
     this.timeout = setTimeout(this.onGazeZero, 1000);
@@ -244,6 +342,7 @@ class TimeBender extends React.Component {
   }
 
   componentDidMount() {
+    // connect to new room with socket.io
     socket.emit('newRoom',
       {room: this.state.room, client: 'vr'},
       function(error, message) {
@@ -254,29 +353,31 @@ class TimeBender extends React.Component {
       console.log(`VR received state: ${JSON.stringify(nextState)}`);
     });
   }
-//   onGaze(){
-//   //set state which sets opacity? set opacity?
-//   console.log("helloo")
-//   this.state.score +=1;
-//   this.setState({visible: 'inactive'})
-// //  this.toggleDisplay()
-// if(this.state.score == 4 && this.state.status == 'started'){
-//   this.setState({win: true, timer: 0, status: 'stopped'})
-//   }
-// }
-// end item disappear button
+
+  //   onGaze(){
+  //   //set state which sets opacity? set opacity?
+  //   console.log("helloo")
+  //   this.state.score +=1;
+  //   this.setState({visible: 'inactive'})
+  // //  this.toggleDisplay()
+  // if(this.state.score == 4 && this.state.status == 'started'){
+  //   this.setState({win: true, timer: 0, status: 'stopped'})
+  //   }
+  // }
+  // end item disappear button
+
   render() {
-    const {GazeButtClicked} = this.state
+    const { GazeButtClicked } = this.state;
     return (
-      <View style={styles.rootView}>
-        <View style={styles.triggerContainer}>
-          <VrButton style={styles.triggerButton} onEnter={this._toggleDisplay}>
-            <Text style={styles.triggerText}>AMPLIFY!</Text>
+      <View style={ styles.rootView }>
+        <View style={ styles.triggerContainer }>
+          <VrButton style={ styles.triggerButton } onEnter={ this._toggleDisplay }>
+            <Text style={ styles.triggerText }>AMPLIFY!</Text>
           </VrButton>
         </View>
-        {this.state.renderVrTextbox && <TextboxVr text={vrTextboxContent} />}
+        { this.state.renderVrTextbox && <TextboxVr text={vrTextboxContent} /> }
 
-          <AmbientLight intensity={ 1.6 }  />
+          <AmbientLight intensity={ 1.6 } />
 
           <Animated.View>
           <Model
@@ -296,11 +397,11 @@ class TimeBender extends React.Component {
           />
           </Animated.View>
           <TimeConsole/>
-          <Pano source={asset(levels[this.state.level].image)}/>
+          <Pano source={ asset(levels[this.state.level].image) }/>
 
           <MissionItemExpir
-            visible={this.state.visibleZero}
-            status={this.state.status}
+            visible={ this.state.visibleZero }
+            status={ this.state.status }
 
             title={this.state.items[0].title}
             source={this.state.items[0].source}
@@ -372,7 +473,7 @@ class TimeBender extends React.Component {
                 starter = <View>
                 <Score score={this.state.score} />
               <Timer timer={this.state.timer} score={this.state.score}{...this.state} />
-            <Button startGame={this.startGame.bind(this)} {...this.state} />
+            <Button startGame={this.startGame.bind(this)} {...this.state} updateState={ this.updateState } />
             </View>
           }
           </View>

@@ -10,7 +10,7 @@ class FoundItems extends React.Component {
         if (index !== 0) {
 
           if (item.found) {
-            image = item.image;
+            image = item.consoleImage;
           } else {
             image = xImage;
           }
