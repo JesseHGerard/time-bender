@@ -21,6 +21,7 @@ function init(bundle, parent, options) {
     ],
     nativeModules: [ domOverlayModule ],
     cursorVisibility: 'visible',
+    enableHotReload: true,
   });
 
   // Inject DOM overlay container to the player so that it is rendered properly.

@@ -13,7 +13,10 @@ import TextboxVr from './TextboxVr.js';
 import MissionItemExpir from './MissionItemExpir.js';
 import Score from './Score.js';
 import StartButton from './StartButton.js';
+import io from 'socket.io-client';
 
+// CHANGE URL FOR PRODUCTION !!!!!!
+const socket = io('http://localhost:3001/');
 
     // let levelStart;
     // if(this.state.win){
@@ -45,25 +48,28 @@ const vrTextboxContent =
   'The game Time Console is not available!';
 const itemsArray = [ items0, items0, items0, items1, items2, items3];
 class TimeBender extends React.Component {
-    state = {
-          level: 0,
-          GazeButtClicked: false,
-          items: items0,
-          timer: 20,
-          status: '',
-          fadeAnim: new Animated.Value(1),
-          currentItem: 1,
-          deviceConnected: false,
-          renderVrTextbox: false,
-          visibleZero: 'active',
-          visibleOne: 'active',
-          visibleTwo: 'active',
-          score: 0,
-          win: false,
-          transitionComplete: true,
-          introduced: false,
-          rotation: 130
-        };
+  state = {
+        level: 0,
+        startButtonStatus: false,
+        deviceConnected: false,
+        room: Date.now(),
+        currentItem: 1,
+        status: '',
+        items: items0,
+
+        timer: 20,
+        fadeAnim: new Animated.Value(1),
+        GazeButtClicked: false,
+        renderVrTextbox: false,
+        visibleZero: 'active',
+        visibleOne: 'active',
+        visibleTwo: 'active',
+        score: 0,
+        win: false,
+        transitionComplete: true,
+        introduced: false,
+        rotation: 130
+      };
     startTimer = this.startTimer.bind(this);
     _toggleDisplay = this.toggleDisplay.bind(this);
     lastUpdate = Date.now();
@@ -78,9 +84,7 @@ class TimeBender extends React.Component {
 
     rotate = this.rotate.bind(this);
     start = this.start.bind(this);
-   // componentDidMount() {
-   //    this.rotate();
-   //  }
+
    rotate() {
       const rando = Math.floor(Math.random() * 7);
       const now = Date.now();
@@ -102,7 +106,7 @@ class TimeBender extends React.Component {
         const nextState = {
           items: this.state.items
         };
-        //socket.emit('updateState', nextState);
+        socket.emit('updateState', nextState);
         console.log("Found: "+this.state.items[itemIndex].found);
       });
     };
@@ -233,6 +237,18 @@ class TimeBender extends React.Component {
     clearTimeout(this.timeout);
     this.timeout = null;
     // end animation
+  }
+
+  componentDidMount() {
+    socket.emit('newRoom',
+      {room: this.state.room, client: 'vr'},
+      function(error, message) {
+      console.log(`VR joining newRoom: ${message}`);
+    });
+    socket.on('updateState', nextState => {
+      this.setState(nextState);
+      console.log(`VR received state: ${JSON.stringify(nextState)}`);
+    });
   }
 //   onGaze(){
 //   //set state which sets opacity? set opacity?
