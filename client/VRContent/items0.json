@@ -24,19 +24,7 @@
     "lit": true
   },
   {
-    "title": 3,
-    "source": ["retro_rocket.obj", "retro_rocket.mtl"],
-    "texture": "",
-    "translate": [15, 0, -20],
-    "scale": 0.005,
-    "rotate": [-80, 0, 0],
-    "found": false,
-    "image": "./../static_assets/images/rocketLine.png",
-    "consoleImage": "./static_assets/images/rocketLine.png",
-    "lit": false
-  },
-  {
-    "title": 3,
+    "title": "rocket",
     "source": ["retro_rocket.obj", "retro_rocket.mtl"],
     "texture": "",
     "translate": [15, 0, -20],

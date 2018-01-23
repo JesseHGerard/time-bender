@@ -17,7 +17,11 @@ class App extends Component {
     status: 'stopped', // string, can be 'stopped' or 'started'
     startButtonStatus: false, // boolean, this means vr game is in 'resting' state if false
 
-    currentItem: 0
+    currentItem: 0,
+
+    visibleZero: 'inactive',
+    visibleOne: 'inactive',
+    visibleTwo: 'inactive',
   }
 
   emitState = () => {
@@ -84,6 +88,7 @@ class App extends Component {
           currentItem={  this.state.currentItem }
           startButtonStatus={ this.state.startButtonStatus }
           status={this.state.status}
+          visible={ [this.state.visibleZero, this.state.visibleOne, this.state.visibleTwo] }
         />;
     }
 
