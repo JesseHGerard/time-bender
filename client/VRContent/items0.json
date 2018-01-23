@@ -8,7 +8,7 @@
     "rotate": [-90, 0, 0],
     "found": false,
     "image": "./../static_assets/images/bomb.png",
-    "consoleImage": "./static_assets/images/bomb.png",
+    "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
   {
@@ -20,7 +20,7 @@
     "rotate": [90, 0, 0],
     "found": false,
     "image": "./../static_assets/images/hour glass.png",
-    "consoleImage": "./static_assets/images/hour glass.png",
+    "consoleImage": "./static_assets/images/moleculeLine.png",
     "lit": true
   },
   {
@@ -32,7 +32,7 @@
     "rotate": [-80, 0, 0],
     "found": false,
     "image": "./../static_assets/images/cotter-pin.png",
-    "consoleImage": "./static_assets/images/cotter-pin.png",
+    "consoleImage": "./static_assets/images/rocketLine.png",
     "lit": false
   }
 ]

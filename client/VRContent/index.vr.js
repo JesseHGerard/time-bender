@@ -68,7 +68,8 @@ class TimeBender extends React.Component {
         win: false,
         transitionComplete: true,
         introduced: false,
-        rotation: 130
+        rotation: 130,
+        perLevel: 0
       };
     startTimer = this.startTimer.bind(this);
     _toggleDisplay = this.toggleDisplay.bind(this);
@@ -171,9 +172,10 @@ class TimeBender extends React.Component {
   //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleZero: 'inactive'})
   //  this.toggleDisplay()
-  if(this.state.score == 3 && this.state.status == 'started'){
+  if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
     }
   this.foundItem(0);
@@ -183,9 +185,10 @@ class TimeBender extends React.Component {
   //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleOne: 'inactive'})
   //  this.toggleDisplay()
-  if(this.state.score == 3 && this.state.status == 'started'){
+  if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
     }
     this.foundItem(1);
@@ -195,9 +198,10 @@ class TimeBender extends React.Component {
   //set state which sets opacity? set opacity?
     console.log("helloo");
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleTwo: 'inactive'})
   //  this.toggleDisplay()
-  if(this.state.score == 3 && this.state.status == 'started'){
+  if(this.state.perLevel == 3 && this.state.status == 'started'){
     this.setState({win: true, timer: 0, status: 'stopped'})
     }
     this.foundItem(2);
@@ -206,7 +210,7 @@ class TimeBender extends React.Component {
   increment(){
     console.log("It incremented!");
     this.state.level +=1;
-   return this.setState({status: 'stopped', timer: levels[this.state.level].timer, items: itemsArray[this.state.level], visibleZero: 'active', visibleOne: 'active', visibleTwo: 'active', score: 0, win: false});
+   return this.setState({status: 'stopped', timer: levels[this.state.level].timer, items: itemsArray[this.state.level], visibleZero: 'active', visibleOne: 'active', visibleTwo: 'active', perLevel: 0, win: false});
   }
   //begin object gaze button functions
   animateProgressZero() {
