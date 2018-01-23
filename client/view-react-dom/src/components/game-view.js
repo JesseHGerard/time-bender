@@ -11,7 +11,11 @@ class GameView extends React.Component {
   render(){
     let content;
     if (this.props.deviceConnected) {
-      content = <FoundItems items={ this.props.items } />;
+      content =
+        <FoundItems
+          items={ this.props.items }
+          visible={ this.props.visible } 
+        />;
     } else {
       content =
       <iframe src={ 'http://localhost:8081/vr' } title="vr"></iframe>;

@@ -7,7 +7,10 @@ class LevelView extends React.Component {
   render() {
     return(
       <div className="level-view">
-        <GameView items={ this.props.items } deviceConnected={ this.props.deviceConnected } />
+        <GameView
+          items={ this.props.items } deviceConnected={ this.props.deviceConnected }
+          visible={ this.props.visible }
+        />
         <Dashboard
           startButtonStatus ={ this.props.startButtonStatus }
           currentItem={ this.props.currentItem }

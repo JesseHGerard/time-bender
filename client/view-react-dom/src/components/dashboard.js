@@ -5,7 +5,7 @@ class Dashboard extends React.Component {
   render() {
     console.log(`currentItem: ${this.props.currentItem}`)
     let currentItem;
-    if (this.props.currentItem !== 0 && this.props.currentItem < 4 && this.props.status === 'started') {
+    if (this.props.currentItem < 4 && this.props.status === 'started') {
        let currentItemProp = this.props.items[this.props.currentItem];
       currentItem =
       <img

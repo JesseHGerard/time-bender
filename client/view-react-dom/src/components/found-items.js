@@ -2,14 +2,13 @@ import React from 'react';
 import xImage from './x.svg';
 class FoundItems extends React.Component {
   render() {
-    console.log(`FoundItems Rendered: ${this.props.items}`)
     let foundItems;
     let image;
     if (this.props.items) {
       foundItems = this.props.items.map( (item, index) => {
-        if (index !== 0) {
+        if (index < 4) {
 
-          if (item.found) {
+          if (this.props.visible[index] === 'inactive') {
             image = item.consoleImage;
           } else {
             image = xImage;

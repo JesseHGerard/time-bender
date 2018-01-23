@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, asset, Sound, Image } from 'react-vr';
 const Score = props => {
-  return(
-    <View style={styles.Button}>
-        <Text style={styles.ButtonText}>Score: {props.score}</Text>
-      </View>
-)
+const scoreMultiplier = parseInt(props.score) * 100;
+
+return(
+  <View style={styles.Button}>
+      <Text style={styles.ButtonText}>Score: {scoreMultiplier}</Text>
+  </View>
+  )
 };
+
 const styles= StyleSheet.create({
   ButtonRed: {
       backgroundColor: 'red',
