@@ -1,7 +1,7 @@
 [
   {
     "title": 1,
-    "source": ["bomb.obj", "bomb.mtl"],
+    "source": ["bomb.obj", ""],
     "texture": "",
     "translate": [3, -5.6, -7],
     "scale": 0.2,
@@ -16,7 +16,7 @@
     "source": ["dna.obj", ""],
     "texture": "",
     "translate": [-3, -5.2, -6],
-    "scale": 0.3,
+    "scale": 0.05,
     "rotate": [0, 75, 0],
     "found": false,
     "image": "./../static_assets/images/DNA_image.png",

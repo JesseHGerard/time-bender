@@ -7,13 +7,6 @@
     "timer": 20,
   },
   {
-    "level": 1,
-    "title": "Story Intro",
-    "image": "Story_Intro.jpg",
-    "audio": "button-click.ogg",
-    "timer": 20,
-  },
-  {
     "level": 2,
     "title": "Museum",
     "image": "museum.jpg",

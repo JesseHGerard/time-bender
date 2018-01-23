@@ -21,7 +21,7 @@ const socket = io('http://localhost:3001/');
 
 const vrTextboxContent =
   'The game Time Console is not available!';
-const itemsArray = [ items0, items0, items0, items1, items2, items3];
+const itemsArray = [ items0, items1, items2, items3];
 class TimeBender extends React.Component {
   state = {
     level: 0,
@@ -304,13 +304,6 @@ class TimeBender extends React.Component {
 
     return (
       <View style={ styles.rootView }>
-        <View style={ styles.triggerContainer }>
-          <VrButton style={ styles.triggerButton } onEnter={ this._toggleDisplay }>
-            <Text style={ styles.triggerText }>AMPLIFY!</Text>
-          </VrButton>
-        </View>
-        { this.state.renderVrTextbox && <TextboxVr text={vrTextboxContent} /> }
-
           <AmbientLight intensity={ 1.6 } />
 
           <Model
@@ -400,7 +393,7 @@ class TimeBender extends React.Component {
             </View>
               }
               <View>
-              {(this.state.level === 0) || (this.state.level === 1) ?
+              {(this.state.level === 0) ?
                 starter =
                 <View>
                 <StartButton start={this.start} {...this.state} />
@@ -504,31 +497,5 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   }
 })
-
-// let levelStart;
-// if(this.state.win){
-//   levelStart =
-//       <View style={styles.gazeView}>
-//         <GazeButton onClick={()=> this.increment()} duration={500}
-//           >
-//           {time => (
-//             <Text style={styles.gazeText}>
-//               {GazeButtClicked ? 'BLAST OFF!' : `YOU WON. NICE.${time}`}
-//             </Text>
-//           )}
-//         </GazeButton>
-//       </View>
-// }else if ((!this.state.win && this.state.level === 0) || (!this.state.win && this.state.level === 1)){
-//   <View>
-//     <StartButton start={this.start.bind(this)} {...this.state} />
-//   </View>
-// }else if((!this.state.win && !this.state.level === 0) || (!this.state.win && !this.state.level === 1)){
-//   console.log("Run workmhole here");
-//   <View>
-//     <Score score={this.state.score} />
-//     <Timer timer={this.state.timer} score={this.state.score}{...this.state} />
-//     <Button startGame={this.startGame.bind(this)} {...this.state} />
-//   </View>
-// }
 
 AppRegistry.registerComponent('TimeBender', () => TimeBender);
