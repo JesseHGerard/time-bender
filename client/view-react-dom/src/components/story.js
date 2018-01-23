@@ -10,7 +10,10 @@ class Story extends React.Component {
      </p>,
     2: <p className="story-text blue">Alright! I'm glad this is working. I wasn't sure if I could freeze your time without making you explode! But I guess it all worked out.<br/><br/>
     I remember the next place I went on my bender. I'll send it to your viewer now.</p>,
-    3: <p className="story-text blue">Just one more stop. Could you hurry it up? I could use a drink'</p>
+    3: <p className="story-text blue">Great I have all the items for my machine! Now I can restart time and try to get everything back to normal! But while I have you hear I want to talk to you about another experiment that I am working on....</p> 
+    <br></br>
+    <br></br>
+    <h3 className="yellow"> To Be Continued...</h3>
   };
 
   render() {  
