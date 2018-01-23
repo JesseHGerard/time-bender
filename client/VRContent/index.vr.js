@@ -157,7 +157,7 @@ class TimeBender extends React.Component {
     this.setState(nextState, () => {
       nextState.items = this.state.items;
       socket.emit('updateState', nextState);
-      console.log(`VR emmited on startGame: ${JSON.string(nextState)}`);
+      console.log(`VR emmited on startGame: ${JSON.stringify(nextState)}`);
     });
   }
 
@@ -253,7 +253,7 @@ class TimeBender extends React.Component {
         visibleTwo: this.state.visibleTwo,
       };
       socket.emit('updateState', nextState);
-      console.log(`VR emmited on increment: ${JSON.string(nextState)}`);
+      console.log(`VR emmited on increment: ${JSON.stringify(nextState)}`);
     });
   }
 
