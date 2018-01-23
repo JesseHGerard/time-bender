@@ -43,33 +43,32 @@ const socket = io('http://localhost:3001/');
     //     <Button startGame={this.startGame.bind(this)} {...this.state} />
     //   </View>
     // }
-
 const vrTextboxContent =
   'The game Time Console is not available!';
 const itemsArray = [ items0, items0, items0, items1, items2, items3];
 class TimeBender extends React.Component {
   state = {
-        level: 0,
-        startButtonStatus: false,
-        deviceConnected: false,
-        room: Date.now(),
-        currentItem: 1,
-        status: '',
-        items: items0,
+    level: 0,
+    startButtonStatus: false,
+    deviceConnected: false,
+    room: Date.now(),
+    currentItem: 1,
+    status: '',
+    items: items0,
 
-        timer: 20,
-        fadeAnim: new Animated.Value(1),
-        GazeButtClicked: false,
-        renderVrTextbox: false,
-        visibleZero: 'active',
-        visibleOne: 'active',
-        visibleTwo: 'active',
-        score: 0,
-        win: false,
-        transitionComplete: true,
-        introduced: false,
-        rotation: 130
-      };
+    timer: 20,
+    fadeAnim: new Animated.Value(1),
+    GazeButtClicked: false,
+    renderVrTextbox: false,
+    visibleZero: 'active',
+    visibleOne: 'active',
+    visibleTwo: 'active',
+    score: 0,
+    win: false,
+    transitionComplete: true,
+    introduced: false,
+    rotation: 130
+  };
     startTimer = this.startTimer.bind(this);
     _toggleDisplay = this.toggleDisplay.bind(this);
     lastUpdate = Date.now();
@@ -81,12 +80,10 @@ class TimeBender extends React.Component {
     animateProgressOne = this.animateProgressOne.bind(this);
     onGazeTwo = this.onGazeTwo.bind(this);
     animateProgressTwo = this.animateProgressTwo.bind(this);
-
     rotate = this.rotate.bind(this);
     start = this.start.bind(this);
 
-   rotate() {
-      const rando = Math.floor(Math.random() * 7);
+    rotate() {
       const now = Date.now();
       const delta = now - this.lastUpdate;
       rotate = this.rotate.bind(this);
@@ -120,7 +117,7 @@ class TimeBender extends React.Component {
           clearInterval(this.timer);
           break;
       }
-  }
+    }
    toggleDisplay() {
     if (VrHeadModel.inVR()) {
       this.setState({renderVrTextbox: !this.state.renderVrTextbox});
@@ -130,32 +127,43 @@ class TimeBender extends React.Component {
     }
   }
   startTimer(){
-  let x = this.state.timer
-  if(x === 0){
-    Animated.timing(
-      this.state.fadeAnim,
-      {toValue: 0}
-    ).start();
-    Animated.timing(
-      this.state.fadeAnim,
-      {toValue: 1}
-    ).start();
-   return this.setState({status: 'stopped', timer: levels[this.state.level].timer});
-  } else{
-    x -= 1
-    this.setState({timer: x})
+    let x = this.state.timer
+    if(x === 0){
+      Animated.timing(
+        this.state.fadeAnim,
+        {toValue: 0}
+      ).start();
+      Animated.timing(
+        this.state.fadeAnim,
+        {toValue: 1}
+      ).start();
+     return this.setState({status: 'stopped', timer: levels[this.state.level].timer}, () => {
+       let nextState = {
+         status: 'stopped'
+       }
+       this.setState(nextState, () => {
+         socket.emit('updateState', nextState);
+         console.log(`vr emitted: ${JSON.stringify(nextState)}`);
+       });
+     });
+    } else{
+      x -= 1
+      this.setState({timer: x})
     }
   }
+
   startGame(){
     this.setState({transitionComplete:false})
     this.timer = setInterval(this.startTimer,1000);
     this.setState({status: 'started'})
     this.setState({introduced:true});
   }
+
   start(){
    level = (this.state.level += 1)
    this.setState({level: level})
   }
+
   animateProgress() {
     console.log("Progress helloo");
     this.timeout = setTimeout(this.onGaze, 1000);

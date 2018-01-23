@@ -54,7 +54,7 @@ export default class view_react_vr extends React.Component {
     this.setState(nextState, () => {
       socket.emit('updateState', nextState);
       console.log(`vr emitted: ${JSON.stringify(nextState)}`);
-    })
+    });
   };
 
   handleItemBoxClick = () => {
