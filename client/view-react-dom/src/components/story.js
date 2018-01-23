@@ -11,7 +11,7 @@ class Story extends React.Component {
     2: [<p className="story-text blue">Alright! I'm glad this is working. I wasn't sure if I could freeze your time without making you explode! But I guess it all worked out.<br/><br/>
     I remember the next place I went on my bender. I'll send it to your viewer now.</p>, "2", this.props.onClick, "Level 2"],
     3: [<p className="story-text blue">Great I have all the items for my machine! Now I can restart time and try to get everything back to normal! But while I have you hear I want to talk to you about another experiment that I am working on....<br></br>
-    <span className="yellow"> To Be Continued...</span></p>, "End", location.reload, "Game Over"]
+    <span className="yellow"> To Be Continued...</span></p>, "End", window.location.reload, "Game Over"]
 
   };
 

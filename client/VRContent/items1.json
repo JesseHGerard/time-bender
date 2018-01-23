@@ -1,6 +1,6 @@
 [
   {
-    "title": 1,
+    "title": "bomb",
     "source": ["bomb.obj", "bomb.mtl"],
     "texture": "",
     "translate": [7, 2, -5],
@@ -12,7 +12,7 @@
     "lit": true
   },
   {
-    "title": 2,
+    "title": "hourglass",
     "source": ["hour glass.obj", "hour glass.mtl"],
     "texture": "",
     "translate": [-5, 4, -15],
@@ -24,7 +24,7 @@
     "lit": true
   },
   {
-    "title": 2,
+    "title": "dna",
     "source": ["dna.obj", ""],
     "texture": "",
     "translate": [-3, -5.2, -6],

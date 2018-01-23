@@ -16,7 +16,7 @@ import StartButton from './StartButton.js';
 import io from 'socket.io-client';
 
 // CHANGE URL FOR PRODUCTION !!!!!!
-const socket = io('http://localhost:3001/');
+const socket = io('https://time-bender.herokuapp.com/');
 
 
 const vrTextboxContent =
@@ -196,7 +196,7 @@ class TimeBender extends React.Component {
         status: 'stopped'})
       this.levelWinEmit();
     }
-    this.foundItem('itemOneFound');
+    this.foundItem('itemZeroFound');
   }
 
   onGazeOne() {
@@ -209,9 +209,9 @@ class TimeBender extends React.Component {
 
     if(this.state.perLevel == 3 && this.state.status == 'started'){
       this.setState({win: true, timer: 0, status: 'stopped'});
-      this.foundItem('itemOneFound');
+      this.levelWinEmit();
     }
-    this.foundItem(1);
+    this.foundItem('itemOneFound');
 
   }
 
@@ -225,7 +225,7 @@ class TimeBender extends React.Component {
       this.setState({win: true, timer: 0, status: 'stopped'});
       this.levelWinEmit();
     }
-    this.foundItem(2);
+    this.foundItem('itemTwoFound');
   }
 
   increment() {
