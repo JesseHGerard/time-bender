@@ -197,6 +197,7 @@ class TimeBender extends React.Component {
   onGazeZero() {
     //set state which sets opacity? set opacity?
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleZero: 'inactive'})
     //  this.toggleDisplay()
     if(this.state.score == 3 && this.state.status == 'started'){
@@ -212,18 +213,27 @@ class TimeBender extends React.Component {
   onGazeOne() {
     //set state which sets opacity? set opacity?
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleOne: 'inactive'})
+<<<<<<< HEAD
+  //  this.toggleDisplay()
+  if(this.state.perLevel == 3 && this.state.status == 'started'){
+    this.setState({win: true, timer: 0, status: 'stopped'})
+    }
     this.foundItem(1);
+=======
     //  this.toggleDisplay()
     if(this.state.score == 3 && this.state.status == 'started'){
       this.setState({win: true, timer: 0, status: 'stopped'})
       }
       this.levelWinEmit();
+>>>>>>> d03d520b9e9efe09009d84cf327559d6f0ff22ad
   }
 
   onGazeTwo() {
     //set state which sets opacity? set opacity?
     this.state.score +=1;
+    this.state.perLevel +=1;
     this.setState({visibleTwo: 'inactive'})
     //  this.toggleDisplay()
     if(this.state.score == 3 && this.state.status == 'started'){
