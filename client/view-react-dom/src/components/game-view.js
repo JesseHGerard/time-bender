@@ -5,7 +5,7 @@ import '../App.css';
 class GameView extends React.Component {
 
   // CHANGE URL FOR PRODUCTION SERVER!!!!
-  //`https://time-bender.herokuapp.com//vr`
+  //`https://time-bender.herokuapp.com/vr`
 
 
   render(){
