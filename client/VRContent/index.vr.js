@@ -56,6 +56,10 @@ class TimeBender extends React.Component {
     status: '',
     items: items0,
 
+    itemOneFound: false,
+    itemTwoFound: false,
+    itemThreeFound: false,
+
     timer: 20,
     fadeAnim: new Animated.Value(1),
     GazeButtClicked: false,
@@ -95,17 +99,13 @@ class TimeBender extends React.Component {
     }
 
     foundItem = (itemIndex) => {
-      console.log("Hello, item index: "+ itemIndex);
-      const nextItems = this.state.items;
-      console.log("json copy: "+ nextItems);
-      nextItems[itemIndex].found = true;
       this.setState({
-        items: nextItems,
-        currentItem: this.state.currentItem + 1
+        [itemIndex]: true
       }, () => {
         const nextState = {
-          items: this.state.items,
-          currentItem: this.state.currentItem
+          itemOneFound: this.state.itemOneFound,
+          itemTwoFound: this.state.itemTwoFound,
+          itemThreeFound: this.state.itemThreeFound,
         };
         socket.emit('updateState', nextState);
         console.log(`VR emitted : ${nextState}`);
@@ -178,7 +178,6 @@ class TimeBender extends React.Component {
   }
 
   animateProgress() {
-    console.log("Progress helloo");
     this.timeout = setTimeout(this.onGaze, 1000);
     // begin animation
   }
@@ -197,7 +196,6 @@ class TimeBender extends React.Component {
 
   onGazeZero() {
     //set state which sets opacity? set opacity?
-    console.log("helloo");
     this.state.score +=1;
     this.setState({visibleZero: 'inactive'})
     //  this.toggleDisplay()
@@ -207,26 +205,24 @@ class TimeBender extends React.Component {
         timer: 0,
         status: 'stopped'})
     }
-    this.foundItem(0);
+    this.foundItem('itemOneFound');
     this.levelWinEmit();
   }
 
   onGazeOne() {
     //set state which sets opacity? set opacity?
-    console.log("helloo");
     this.state.score +=1;
     this.setState({visibleOne: 'inactive'})
+    this.foundItem(1);
     //  this.toggleDisplay()
     if(this.state.score == 3 && this.state.status == 'started'){
       this.setState({win: true, timer: 0, status: 'stopped'})
       }
-      this.foundItem(1);
       this.levelWinEmit();
   }
 
   onGazeTwo() {
     //set state which sets opacity? set opacity?
-    console.log("helloo");
     this.state.score +=1;
     this.setState({visibleTwo: 'inactive'})
     //  this.toggleDisplay()
@@ -250,7 +246,7 @@ class TimeBender extends React.Component {
       score: 0,
       win: false,
     }, () => {
-      let nextState = {
+      const nextState = {
         status: this.state.status,
         items: this.state.items,
       };
@@ -348,6 +344,7 @@ class TimeBender extends React.Component {
           <Pano source={ asset(levels[this.state.level].image) }/>
 
           <MissionItemExpir
+            key="0"
             visible={ this.state.visibleZero }
             status={ this.state.status }
 
@@ -366,6 +363,7 @@ class TimeBender extends React.Component {
           />
 
           <MissionItemExpir
+            key="1"
             visible={this.state.visibleOne}
             status={this.state.status}
 
@@ -384,6 +382,7 @@ class TimeBender extends React.Component {
           />
 
           <MissionItemExpir
+            key="2"
             visible={this.state.visibleTwo}
             status={this.state.status}
 
@@ -404,7 +403,7 @@ class TimeBender extends React.Component {
           <View>
             { this.state.win ?
             <VrButton style={styles.gazeView}
-              onClick={()=>this.increment()}>
+              onClick={this.increment}>
               <Text style={styles.gazeText}>VICTORY! NEXT LEVEL?</Text>
             </VrButton>
                   :
