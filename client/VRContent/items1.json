@@ -19,8 +19,8 @@
     "scale": 0.05,
     "rotate": [0, 75, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
-    "consoleImage": "./static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/dnaLine.png",
+    "consoleImage": "./static_assets/images/dnaLine.png",
     "lit": true
   },
   {

@@ -7,7 +7,7 @@
     "scale": 0.10,
     "rotate": [0, 0, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/dnaLine.png",
     "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
@@ -19,7 +19,7 @@
     "scale": 0.10,
     "rotate": [0, 0, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/dnaLine.png",
     "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
@@ -31,7 +31,7 @@
     "scale": 0.10,
     "rotate": [0, 0, 0],
     "found": false,
-    "image": "./../static_assets/images/DNA_image.png",
+    "image": "./../static_assets/images/dnaLine.png",
     "consoleImage": "./static_assets/images/clockLine.png",
     "lit": true
   },
