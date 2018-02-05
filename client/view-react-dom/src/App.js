@@ -4,13 +4,14 @@ import Welcome from './components/welcome.js';
 import Story from './components/story.js';
 import './App.css';
 import io from 'socket.io-client';
-const socket = io(window.location.origin);
+const socket = io('http://localhost:3001/');
 
 class App extends Component {
 
   state = {
     welcome: true,
-    room: null,
+    // room: Date.now(),
+    room: 12341234,
     deviceConnected: false,
 
     level: 0,
@@ -25,7 +26,7 @@ class App extends Component {
   }
 
   emitState = () => {
-    this.setState({deviceConnected: true}, () => {
+    this.setState({ deviceConnected: true }, () => {
       socket.emit('updateState', this.state);
       console.log(`emitted: ${this.state}`);
     });
@@ -35,17 +36,17 @@ class App extends Component {
     const element = document.body;
     const requestMethod = element.requestFullScreen || element.webkitRequestFullScreen ||  element.mozRequestFullScreen || element.msRequestFullScreen;
     requestMethod.call(element);
-  };
+  }
 
   handleOneDevice = () => {
     this.setState({welcome: false});
     this.goFullscreen();
-  };
+  }
 
   handleTwoDevice = () => {
     this.setState({welcome: false, deviceConnected: true});
     this.goFullscreen();
-  };
+  }
 
   handleAdvanceLevel = () => {
     this.setState({
@@ -62,9 +63,9 @@ class App extends Component {
         level: ${this.state.level},
         currentItem: ${this.state.currentItem},
         startButtonStatus: ${this.state.startButtonStatus}
-      `)
+      `);
     });
-  };
+  }
 
   emitIncrement = () => {
     socket.emit('updateState', { increment: true });
@@ -112,20 +113,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    socket.on('joinInvite', nextRoom => {
-      if (this.state.room === null) {
-        this.setState({room: nextRoom}, () => {
-          socket.emit('newRoom',
-            {room: this.state.room, client: "rd"})
-          console.log(`RD joining room: ${this.state.room}`);
-        });
-      }
-      socket.on('updateState', nextState => {
-        this.setState(nextState);
-        console.log(`RD received state: ${JSON.stringify(nextState)}`);
-      });
-    });
+    socket.emit(
+      'joinRoom',
+      {room: this.state.room, client: "rd"},
+    );
+    console.log(`RD joining room: ${this.state.room}`);
   }
 
 }

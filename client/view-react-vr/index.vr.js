@@ -7,12 +7,12 @@ import {
   View,
   VrButton,
   Image,
-  VrHeadModel
+  VrHeadModel,
+
 } from 'react-vr';
 import Button from './components/button.js'
 import items1 from "./items1.json";
 import io from 'socket.io-client';
-
 
 // CHANGE URL FOR PRODUCTION !!!!!!
 const socket = io('http://localhost:3001/');
@@ -84,12 +84,12 @@ export default class view_react_vr extends React.Component {
       <FindItemBox
         onClick={ handleItemBoxClick }
         item={ this.items[currentItem] }
-      />
+      />;
 
 
 
 
-    console.log(`rendered`)
+    console.log(`rendered`);
     return (
       <View>
         <Pano source={asset(this.state.items[0].pano)}/>
@@ -99,7 +99,7 @@ export default class view_react_vr extends React.Component {
           title="end"
         />
       </View>
-    )
+    );
   }
 
   componentDidMount() {
