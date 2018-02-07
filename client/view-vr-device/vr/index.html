@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   </head>
   <body>
-    <script src="./webvr-polyfill.js"></script>
+    <script src="../webvr-polyfill.js"></script>
     <script>
       // check for 'st' (2 device), run webVR polyfill
       let stereo = false;
@@ -23,13 +23,13 @@
 
     </script>
     <!-- When you're ready to deploy your app, update this line to point to your compiled client.bundle.js -->
-    <script src="./static-assets/client.bundle.js"></script>
+    <script src="../vr-assets/client.bundle.js"></script>
     <script>
       // Initialize the React VR application
       ReactVR.init(
         // When you're ready to deploy your app, update this line to point to
         // your compiled index.bundle.js
-        './static-assets/index.bundle.js',
+        '../vr-assets/index.bundle.js',
         // Attach it to the body tag
         document.body
       );
