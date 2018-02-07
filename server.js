@@ -37,6 +37,12 @@ io.on('connection', function(socket){
       console.log(`${newRoom.client} sent State: ${nextState}`);
       socket.broadcast.to(newRoom.room).emit('updateState', nextState);
     });
+
+    socket.on('increment', () => {
+      console.log(`${newRoom.client} sent increment`);
+      socket.broadcast.to(newRoom.room).emit('increment');
+    })
+
   });
 });
 

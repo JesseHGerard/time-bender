@@ -8,14 +8,16 @@ class LevelView extends React.Component {
     return(
       <div className="level-view">
         <GameView
-          items={ this.props.items } deviceConnected={ this.props.deviceConnected }
-          visible={ this.props.visible }
+          items={ this.props.items }
+          deviceConnected={ this.props.deviceConnected }
+          currentItem={ this.props.currentItem }
         />
         <Dashboard
           startButtonStatus ={ this.props.startButtonStatus }
           currentItem={ this.props.currentItem }
           items={ this.props.items }
           status={ this.props.status}
+          level={ this.props.level }
         />
       </div>
     );

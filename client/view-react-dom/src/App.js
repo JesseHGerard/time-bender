@@ -19,18 +19,16 @@ class App extends Component {
     startButtonStatus: false, // boolean, this means vr game is in 'resting' state if false
 
     currentItem: 0,
-
-    visibleZero: 'inactive',
-    visibleOne: 'inactive',
-    visibleTwo: 'inactive',
   }
 
+  // currently not used
+  /*
   emitState = () => {
     this.setState({ deviceConnected: true }, () => {
       socket.emit('updateState', this.state);
       console.log(`emitted: ${this.state}`);
     });
-  }
+  }*/
 
   goFullscreen = () => {
     const element = document.body;
@@ -39,12 +37,18 @@ class App extends Component {
   }
 
   handleOneDevice = () => {
-    this.setState({welcome: false});
+    this.setState({
+      welcome: false,
+      deviceConnected: false
+    });
     this.goFullscreen();
   }
 
   handleTwoDevice = () => {
-    this.setState({welcome: false, deviceConnected: true});
+    this.setState({
+      welcome: false,
+      deviceConnected: true
+    });
     this.goFullscreen();
   }
 
@@ -57,7 +61,8 @@ class App extends Component {
       socket.emit('updateState', {
         level: this.state.level,
         currentItem: this.state.currentItem,
-        startButtonStatus: this.state.startButtonStatus
+        startButtonStatus: this.state.startButtonStatus,
+        deviceConnectd: this.state.deviceConnectd,
       })
       console.log(`RD emitted state:
         level: ${this.state.level},
@@ -68,8 +73,9 @@ class App extends Component {
   }
 
   emitIncrement = () => {
-    socket.emit('updateState', { increment: true });
-    console.log('RD emitted increment');
+    socket.emit('updateState', { deviceConnected: this.state.deviceConnected });
+    socket.emit('increment');
+    console.log(`RD emitted 'increment'`);
   }
 
   render() {
@@ -78,6 +84,7 @@ class App extends Component {
     if (this.state.welcome) {
       mainView =
         <Welcome
+          room={ this.state.room }
           handleOneDevice={ this.handleOneDevice }
           handleTwoDevice={ this.handleTwoDevice }
         />;
@@ -88,8 +95,9 @@ class App extends Component {
           deviceConnected={ this.state.deviceConnected }
           currentItem={  this.state.currentItem }
           startButtonStatus={ this.state.startButtonStatus }
-          status={this.state.status}
+          status={ this.state.status }
           visible={ [this.state.visibleZero, this.state.visibleOne, this.state.visibleTwo] }
+          level={ this.state.level }
         />;
     }
 
@@ -118,6 +126,11 @@ class App extends Component {
       {room: this.state.room, client: "rd"},
     );
     console.log(`RD joining room: ${this.state.room}`);
+
+    socket.on('updateState', nextState => {
+      this.setState(nextState);
+      console.log(`RD received ${JSON.stringify(nextState)}`);
+    })
   }
 
 }

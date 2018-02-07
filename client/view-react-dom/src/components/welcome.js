@@ -10,14 +10,14 @@ class Welcome extends React.Component {
     this.setState({playTwo: true});
   };
 
-  // https://time-bender.herokuapp.com/
 
   render() {
     let yellow, blue;
     if (this.state.playTwo) {
+      let vrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=https://time-bender.herokuapp.com/st/${this.props.room}&size=200x200`;
       blue =
         <div className="blue">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://time-bender.herokuapp.com/vr&size=200x200" alt="QR Code" />
+          <img src={ vrUrl } alt="QR Code" />
         </div>;
       yellow =
         <div onClick={ this.props.handleTwoDevice } className="yellow button"><p>start game</p></div>

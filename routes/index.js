@@ -6,4 +6,8 @@ router.get('/vr/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/VRContent/vr/index.html'))
 });
 
+router.get('/st/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/VRContent/vr/index.html'))
+});
+
 module.exports = router;

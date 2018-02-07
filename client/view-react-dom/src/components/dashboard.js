@@ -3,16 +3,23 @@ import React from 'react';
 class Dashboard extends React.Component {
 
   render() {
-    console.log(`currentItem: ${this.props.currentItem}`)
-    let currentItem;
-    if (this.props.currentItem < 3 && this.props.status === 'started') {
-       let currentItemProp = this.props.items[this.props.currentItem];
-      currentItem =
-      <img
-        className="current-item"
-        src={ currentItemProp.consoleImage }
-        alt={ currentItemProp.name }
-      />;
+    console.log(`currentItem: ${JSON.stringify(this.props.currentItem)}`);
+    console.log(`items: ${JSON.stringify(this.props.items)}`);
+    //console.log(`items[currentItem]: ${JSON.stringify(this.props.items[Number.toString(this.props.currentItem)])}`);
+    let currentItem = null;
+
+    if (this.props.currentItem < 4 && this.props.status === 'started') {
+
+      let currentItemProp = this.props.items[this.props.currentItem];
+      console.log(`currentItemProp ${JSON.stringify(currentItemProp)}`);
+
+      currentItem = (
+        <img
+          className="current-item"
+          src={ currentItemProp.hintUrl }
+          alt={ currentItemProp.title }
+        />
+      );
     }
 
     return (

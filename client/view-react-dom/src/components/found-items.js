@@ -6,10 +6,10 @@ class FoundItems extends React.Component {
     let image;
     if (this.props.items) {
       foundItems = this.props.items.map( (item, index) => {
-        if (index < 3) {
+        if (index > 0 && index < this.props.items.length) {
 
-          if (this.props.visible[index] === 'inactive') {
-            image = item.consoleImage;
+          if (this.props.currentItem > index) {
+            image = item.foundUrl;
           } else {
             image = xImage;
           }

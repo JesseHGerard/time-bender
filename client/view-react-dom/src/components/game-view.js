@@ -14,11 +14,11 @@ class GameView extends React.Component {
       content =
         <FoundItems
           items={ this.props.items }
-          visible={ this.props.visible }
+          currentItem={ this.props.currentItem }
         />;
     } else {
       content =
-      <iframe src={ 'https://time-bender.herokuapp.com/vr' } title="vr"></iframe>;
+      <iframe src={ 'http://localhost:8081/vr' } title="vr"></iframe>;
     }
     return (
       <div className="game-view">

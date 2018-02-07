@@ -1,4 +1,5 @@
 {
-  "0": "chess-world.jpg",
-  "1": "chess-world.jpg",
+  "0": "./panos/chess-world.jpg",
+  "1": "./panos/street.jpg",
+  "2": "./panos/roof.jpg",
 }
