@@ -11,6 +11,7 @@ class LevelView extends React.Component {
           items={ this.props.items }
           deviceConnected={ this.props.deviceConnected }
           currentItem={ this.props.currentItem }
+          room={ this.props.room }
         />
         <Dashboard
           startButtonStatus ={ this.props.startButtonStatus }

@@ -4,14 +4,23 @@ import Welcome from './components/welcome.js';
 import Story from './components/story.js';
 import './App.css';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3001/');
+
+let socket;
+let roomId;
+// socket.io url, dev or production
+if (window.location.hostname === 'localhost') {
+  socket = io('http://localhost:3001/');
+  roomId = 12341234;
+} else {
+  socket = io(window.location.origin);
+  roomId = Date.now();
+}
 
 class App extends Component {
 
   state = {
     welcome: true,
-    // room: Date.now(),
-    room: 12341234,
+    room: roomId,
     deviceConnected: false,
 
     level: 0,
@@ -21,27 +30,20 @@ class App extends Component {
     currentItem: 0,
   }
 
-  // currently not used
-  /*
-  emitState = () => {
-    this.setState({ deviceConnected: true }, () => {
-      socket.emit('updateState', this.state);
-      console.log(`emitted: ${this.state}`);
-    });
-  }*/
-
+/*
   goFullscreen = () => {
     const element = document.body;
     const requestMethod = element.requestFullScreen || element.webkitRequestFullScreen ||  element.mozRequestFullScreen || element.msRequestFullScreen;
     requestMethod.call(element);
   }
+  */
 
   handleOneDevice = () => {
     this.setState({
       welcome: false,
       deviceConnected: false
     });
-    this.goFullscreen();
+    // this.goFullscreen();
   }
 
   handleTwoDevice = () => {
@@ -49,7 +51,7 @@ class App extends Component {
       welcome: false,
       deviceConnected: true
     });
-    this.goFullscreen();
+    // this.goFullscreen();
   }
 
   handleAdvanceLevel = () => {
@@ -98,6 +100,7 @@ class App extends Component {
           status={ this.state.status }
           visible={ [this.state.visibleZero, this.state.visibleOne, this.state.visibleTwo] }
           level={ this.state.level }
+          room={ this.state.room }
         />;
     }
 

@@ -3,9 +3,7 @@ import React from 'react';
 class Dashboard extends React.Component {
 
   render() {
-    console.log(`currentItem: ${JSON.stringify(this.props.currentItem)}`);
-    console.log(`items: ${JSON.stringify(this.props.items)}`);
-    //console.log(`items[currentItem]: ${JSON.stringify(this.props.items[Number.toString(this.props.currentItem)])}`);
+
     let currentItem = null;
 
     if (this.props.currentItem < 4 && this.props.status === 'started') {

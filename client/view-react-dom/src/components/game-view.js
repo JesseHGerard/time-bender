@@ -2,11 +2,15 @@ import React from 'react';
 import FoundItems from './found-items.js';
 import '../App.css';
 
+
+
 class GameView extends React.Component {
-
-  // CHANGE URL FOR PRODUCTION SERVER!!!!
-  //`https://time-bender.herokuapp.com/vr`
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      vrUrl: window.location.hostname === 'localhost' ? `http://localhost:8081/vr/` : `${window.location.origin}/vr/${this.props.room}`
+    };
+  }
 
   render(){
     let content;
@@ -18,7 +22,7 @@ class GameView extends React.Component {
         />;
     } else {
       content =
-      <iframe src={ 'http://localhost:8081/vr' } title="vr"></iframe>;
+      <iframe src={ this.state.vrUrl } title="vr"></iframe>;
     }
     return (
       <div className="game-view">

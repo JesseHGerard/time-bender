@@ -19,14 +19,19 @@ const moduleLocation = NativeModules.WindowModule.pathName;
 
 // socket.io setup (url to production or dev)
 import io from 'socket.io-client';
-const ioUrl = () => {
-  if (moduleLocation.hostname === 'localhost') {
-    return 'http://localhost:3001';
-  } else  {
-    return moduleLocation.origin;
-  }
+let ioUrl;
+let roomId;
+if (moduleLocation.hostname === 'localhost') {
+  // set dev defaults
+  ioUrl = 'http://localhost:3001';
+  roomId = 12341234;
+} else  {
+  // set production defaults
+  ioUrl = moduleLocation.origin;
+  roomId = moduleLocation.pathname.slice(4);
 }
-const socket = io(ioUrl());
+
+const socket = io(ioUrl);
 
 
 export default class view_vr_device extends React.Component {
@@ -34,10 +39,9 @@ export default class view_vr_device extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // room: moduleLocation.pathname.slice(4),
-      room: 12341234,
+      room: roomId,
       level: 0,
-      status: 'stopped', // stopped or started
+      status: 'stopped',
       startButtonStatus: true,
       currentItem: 0,
       items: itemsList[0].items,
