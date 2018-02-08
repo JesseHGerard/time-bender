@@ -12,11 +12,11 @@ copy images from vr to static/images/
 
 
 react-vr:
-index.vr.js - socket.io URL
+// index.vr.js - socket.io URL
 
-index.html -  change paths to static/vr-assets
+// index.html -  change paths to static/vr-assets
 
-remove hot reload
+// remove hot reload
 
 npm run bundle
 

@@ -49,7 +49,7 @@ export default class ItemBox extends Component {
                 ],
                 // change borderColor alpha to 1 for dev
                 borderWidth: .25,
-                borderColor: "rgba(0,0,0,1)",
+                borderColor: "rgba(0,0,0,0)",
 
               }}
             />
