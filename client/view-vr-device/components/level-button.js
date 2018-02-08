@@ -29,7 +29,7 @@ export default class LevelButton extends React.Component{
 
     if (this.props.deviceConnected) {
       buttonType = (
-        <GazeButton onClick={ this.props.onClick } duration={2000}>
+        <GazeButton onClick={ this.props.onClick } duration={1200}>
           { time => buttonContent }
         </GazeButton>
       );
