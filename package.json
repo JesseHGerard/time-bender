@@ -25,7 +25,6 @@
     "start": "node server.js",
     "startmon": "nodemon server.js",
     "client": "npm run start --prefix client/view-react-dom",
-    "vr": "npm run start --prefix client/view-react-vr",
     "dev": "concurrently \"npm run startmon\" \"npm run client\""
   }
 }
