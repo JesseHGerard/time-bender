@@ -17,7 +17,7 @@ export default class ItemBox extends Component {
     if (this.props.deviceConnected) {
       headsUpView = (
         <Image
-          source={ asset('../' + item.hintUrl) }
+          source={ asset(item.hintUrl) }
           style={{
             position: 'absolute',
             height: item.hintSize[1],
