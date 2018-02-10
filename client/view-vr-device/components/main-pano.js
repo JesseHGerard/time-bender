@@ -8,6 +8,6 @@ import PanoNames from './panos.json';
 
 export default class MainPano extends Component{
   render() {
-    return <Pano source={ asset(PanoNames[this.props.level]) }/>;
+    return <Pano source={{ uri: `../${PanoNames[this.props.level]}` }}/>;
   }
 }
