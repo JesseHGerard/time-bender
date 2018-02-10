@@ -13,7 +13,7 @@ export default class LevelButton extends React.Component{
   render() {
     let buttonContent = (
       <Image
-        source={ asset("../images/start.svg") }
+        source={{ uri: "../images/start.svg" }}
         style={{
           position: 'absolute',
           height: 8,
