@@ -15,7 +15,7 @@ export default class ItemBox extends Component {
     let itemBox = null;
     // check for 2 device mode
     if (this.props.deviceConnected) {
-      headsUpView = (
+      headsUpView =
         <Image
           source={{ uri: `../${item.hintUrl}` }}
           key={ Date.now() }
@@ -30,9 +30,9 @@ export default class ItemBox extends Component {
             ],
           }}
         />
-      );
+      ;
 
-      itemBox = (
+      itemBox =
         <GazeButton
           onClick={ this.props.onClick }
           duration={800}
@@ -56,9 +56,9 @@ export default class ItemBox extends Component {
             />
           )}
         </GazeButton>
-      );
+      ;
     } else {
-      itemBox = (
+      itemBox =
         <VrButton onClick={ this.props.onClick } >
             <View
               style={{
@@ -76,7 +76,7 @@ export default class ItemBox extends Component {
               }}
             />
         </VrButton>
-      );
+      ;
 
     }
 

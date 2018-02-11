@@ -11,7 +11,7 @@ import GazeButton from './gaze-button.js';
 export default class LevelButton extends React.Component{
 
   render() {
-    let buttonContent = (
+    const buttonContent =
       <Image
         source={{ uri: "../images/start.svg" }}
         key={ Date.now() }
@@ -24,18 +24,18 @@ export default class LevelButton extends React.Component{
           ],
         }}
       />
-    );
+    ;
 
-    const buttonGaze = (
+    const buttonGaze = 
       <GazeButton onClick={ this.props.onClick } duration={1200}>
         { time => buttonContent }
       </GazeButton>
-    );
-    const buttonClick = (
+    ;
+    const buttonClick =
       <VrButton onClick={ this.props.onClick }>
         { buttonContent }
       </VrButton>
-    );
+    ;
 
     return this.props.deviceConnected ? buttonGaze : buttonClick;
   }
