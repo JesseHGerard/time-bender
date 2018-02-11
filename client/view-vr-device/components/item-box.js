@@ -12,7 +12,7 @@ export default class ItemBox extends Component {
     const item = this.props.item;
 
     let headsUpView = null;
-    let itemBox;
+    let itemBox = null;
     // check for 2 device mode
     if (this.props.deviceConnected) {
       headsUpView = (

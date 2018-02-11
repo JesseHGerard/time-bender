@@ -113,7 +113,7 @@ export default class view_vr_device extends React.Component {
 
   render() {
 
-    let button;
+    let button = null;
     if (!this.state.startButtonStatus) {
       button = <LevelButton text="start" onClick={ this.handleStartClick } deviceConnected={ this.state.deviceConnected } />;
     }
