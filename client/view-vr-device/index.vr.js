@@ -113,28 +113,29 @@ export default class view_vr_device extends React.Component {
 
   render() {
 
-    let button = null;
-    if (!this.state.startButtonStatus) {
-      button = <LevelButton text="start" onClick={ this.handleStartClick } deviceConnected={ this.state.deviceConnected } />;
-    }
-
-    let itemBox = null;
-    if (this.state.items[this.state.currentItem] !== undefined && this.state.currentItem !== 0) {
-      itemBox = (
-        <ItemBox
-          item={ this.state.items[this.state.currentItem] }
-          onClick={ this.handleItemBoxClick }
-          deviceConnected={ this.state.deviceConnected}
-        />
-      );
-    }
+    // let button = null;
+    // if (!this.state.startButtonStatus) {
+    //   button = <LevelButton text="start" onClick={ this.handleStartClick } deviceConnected={ this.state.deviceConnected } />;
+    // }
+    //
+    // let itemBox = null;
+    // if (this.state.items[this.state.currentItem] !== undefined && this.state.currentItem !== 0) {
+    //   itemBox = (
+    //     <ItemBox
+    //       item={ this.state.items[this.state.currentItem] }
+    //       onClick={ this.handleItemBoxClick }
+    //       deviceConnected={ this.state.deviceConnected}
+    //     />
+    //   );
+    // }
 
 
     return (
-      <View>
+      <View key={ Date.now() }>
         <MainPano level={ this.state.level }/>
-        { button }
-        { itemBox }
+        { !this.state.startButtonStatus ? <LevelButton text="start" onClick={ this.handleStartClick } deviceConnected={ this.state.deviceConnected } /> : null }
+        { this.state.items[this.state.currentItem] !== undefined && this.state.currentItem !== 0 ? <ItemBox item={ this.state.items[this.state.currentItem] } onClick={ this.handleItemBoxClick } deviceConnected={ this.state.deviceConnected}
+        /> : null}
       </View>
     );
   }

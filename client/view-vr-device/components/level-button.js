@@ -26,23 +26,17 @@ export default class LevelButton extends React.Component{
       />
     );
 
-    let buttonType;
+    const buttonGaze = (
+      <GazeButton onClick={ this.props.onClick } duration={1200}>
+        { time => buttonContent }
+      </GazeButton>
+    );
+    const buttonClick = (
+      <VrButton onClick={ this.props.onClick }>
+        { buttonContent }
+      </VrButton>
+    );
 
-    if (this.props.deviceConnected) {
-      buttonType = (
-        <GazeButton onClick={ this.props.onClick } duration={1200}>
-          { time => buttonContent }
-        </GazeButton>
-      );
-    } else {
-      buttonType = (
-        <VrButton onClick={ this.props.onClick }>
-          { buttonContent }
-        </VrButton>
-      );
-    }
-
-
-    return buttonType;
+    return this.props.deviceConnected ? buttonGaze : buttonClick;
   }
 };
