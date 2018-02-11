@@ -14,6 +14,7 @@ export default class LevelButton extends React.Component{
     let buttonContent = (
       <Image
         source={{ uri: "../images/start.svg" }}
+        key={ Date.now() }
         style={{
           position: 'absolute',
           height: 8,

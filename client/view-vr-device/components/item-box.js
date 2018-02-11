@@ -18,6 +18,7 @@ export default class ItemBox extends Component {
       headsUpView = (
         <Image
           source={{ uri: `../${item.hintUrl}` }}
+          key={ Date.now() }
           style={{
             position: 'absolute',
             height: item.hintSize[1],
